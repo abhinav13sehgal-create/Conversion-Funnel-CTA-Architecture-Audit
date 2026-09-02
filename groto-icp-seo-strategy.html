@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Groto ICP SEO Intelligence — Competitive Reverse Engineering &amp; 90-Day Strategy</title>
+<style>
+:root{
+  --bg:#0d0f14; --bg2:#141821; --bg3:#1b202b; --line:#252b38; --line2:#333b4d;
+  --tx:#e8ecf3; --tx2:#98a2b8; --tx3:#6b7690;
+  --ac:#5b8def; --ac2:#7aa5f5;
+  --crit:#f4645f; --warn:#e8a53d; --ok:#3fb984; --neu:#8b93a7;
+  --critbg:rgba(244,100,95,.12); --warnbg:rgba(232,165,61,.12); --okbg:rgba(63,185,132,.12);
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg); color:var(--tx);
+  font:15px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--ac2);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* ---------- HEADER ---------- */
+header{
+  background:linear-gradient(160deg,#151b2b 0%,#0d0f14 70%);
+  border-bottom:1px solid var(--line); padding:38px 28px 30px;
+}
+.hwrap{max-width:1480px;margin:0 auto}
+.eyebrow{font:600 11px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--ac);margin-bottom:14px}
+h1{font-size:30px;font-weight:700;letter-spacing:-.02em;line-height:1.2;margin-bottom:10px}
+.sub{color:var(--tx2);font-size:14.5px;max-width:900px}
+.meta{margin-top:16px;display:flex;flex-wrap:wrap;gap:8px}
+.pill{font:500 11.5px/1 var(--mono);color:var(--tx2);background:var(--bg3);border:1px solid var(--line);
+  border-radius:99px;padding:6px 12px;letter-spacing:.02em}
+
+/* ---------- KPI STRIP ---------- */
+.kpis{max-width:1480px;margin:22px auto 0;padding:0 28px;
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(178px,1fr));gap:12px}
+.kpi{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:15px 16px;position:relative;overflow:hidden}
+.kpi::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--neu)}
+.kpi.c::before{background:var(--crit)} .kpi.w::before{background:var(--warn)} .kpi.g::before{background:var(--ok)}
+.kpi .l{font:600 10.5px/1.3 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--tx3);margin-bottom:8px}
+.kpi .v{font-size:25px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.kpi.c .v{color:var(--crit)} .kpi.w .v{color:var(--warn)} .kpi.g .v{color:var(--ok)}
+.kpi .d{font-size:11.5px;color:var(--tx3);margin-top:7px;line-height:1.45}
+
+/* ---------- NAV ---------- */
+nav{position:sticky;top:0;z-index:50;background:rgba(13,15,20,.96);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);margin-top:26px}
+.nwrap{max-width:1480px;margin:0 auto;padding:0 28px;display:flex;gap:2px;overflow-x:auto;scrollbar-width:thin}
+.nwrap::-webkit-scrollbar{height:3px}
+.nwrap::-webkit-scrollbar-thumb{background:var(--line2);border-radius:3px}
+.tab{flex:0 0 auto;background:none;border:none;color:var(--tx3);font:500 13px/1 inherit;
+  padding:15px 14px;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:color .12s}
+.tab:hover{color:var(--tx2)}
+.tab.on{color:var(--ac2);border-bottom-color:var(--ac)}
+.tab .num{font:600 10px/1 var(--mono);color:var(--tx3);margin-right:5px}
+.tab.on .num{color:var(--ac)}
+
+/* ---------- LAYOUT ---------- */
+main{max-width:1480px;margin:0 auto;padding:32px 28px 90px}
+.pane{display:none;animation:fade .2s ease}
+.pane.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+section{margin-bottom:40px}
+h2{font-size:20px;font-weight:650;letter-spacing:-.015em;margin-bottom:6px;display:flex;align-items:center;gap:10px}
+h2 .tag{font:600 10px/1 var(--mono);letter-spacing:.1em;color:var(--ac);background:rgba(91,141,239,.12);
+  border:1px solid rgba(91,141,239,.25);border-radius:4px;padding:4px 7px}
+h3{font-size:15.5px;font-weight:600;margin:26px 0 10px;color:var(--tx)}
+.lede{color:var(--tx2);font-size:14px;margin-bottom:18px;max-width:1000px}
+.note{font-size:13px;color:var(--tx3);background:var(--bg2);border-left:2px solid var(--line2);
+  padding:11px 15px;border-radius:0 6px 6px 0;margin-bottom:18px;line-height:1.6}
+
+/* ---------- CALLOUTS ---------- */
+.callout{border-radius:10px;padding:17px 19px;margin-bottom:18px;border:1px solid;line-height:1.62;font-size:14px}
+.callout.crit{background:var(--critbg);border-color:rgba(244,100,95,.3)}
+.callout.warn{background:var(--warnbg);border-color:rgba(232,165,61,.3)}
+.callout.ok{background:var(--okbg);border-color:rgba(63,185,132,.3)}
+.callout .ct{font:700 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:9px}
+.callout.crit .ct{color:var(--crit)} .callout.warn .ct{color:var(--warn)} .callout.ok .ct{color:var(--ok)}
+
+/* ---------- TABLES ---------- */
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--bg2)}
+table{width:100%;border-collapse:collapse;font-size:13.2px}
+th{background:var(--bg3);text-align:left;padding:11px 13px;font:600 10.5px/1.4 var(--mono);
+  letter-spacing:.07em;text-transform:uppercase;color:var(--tx3);border-bottom:1px solid var(--line);
+  white-space:nowrap;position:sticky;top:0}
+td{padding:11px 13px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.55}
+tr:last-child td{border-bottom:none}
+tbody tr:hover{background:rgba(255,255,255,.018)}
+td.num,th.num{text-align:right;font-family:var(--mono);font-size:12.5px;white-space:nowrap}
+.groto-row{background:rgba(244,100,95,.07)!important}
+.groto-row:hover{background:rgba(244,100,95,.11)!important}
+.groto-row td:first-child{font-weight:700;color:var(--crit)}
+code,.mono{font-family:var(--mono);font-size:12px;background:var(--bg3);padding:1.5px 5px;
+  border-radius:3px;color:var(--ac2);word-break:break-all}
+
+/* ---------- BADGES ---------- */
+.b{display:inline-block;font:600 10px/1 var(--mono);letter-spacing:.05em;text-transform:uppercase;
+  padding:4px 7px;border-radius:4px;white-space:nowrap}
+.b.crit{background:var(--critbg);color:var(--crit);border:1px solid rgba(244,100,95,.3)}
+.b.warn{background:var(--warnbg);color:var(--warn);border:1px solid rgba(232,165,61,.3)}
+.b.ok{background:var(--okbg);color:var(--ok);border:1px solid rgba(63,185,132,.3)}
+.b.neu{background:var(--bg3);color:var(--tx3);border:1px solid var(--line)}
+.b.ac{background:rgba(91,141,239,.12);color:var(--ac2);border:1px solid rgba(91,141,239,.28)}
+
+/* ---------- CARDS ---------- */
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(400px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(310px,1fr))}
+.card{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:18px 20px}
+.card h4{font-size:14.5px;font-weight:620;margin-bottom:9px;line-height:1.35}
+.card p{font-size:13.2px;color:var(--tx2);line-height:1.62}
+.card ul{margin:9px 0 0 17px;font-size:13px;color:var(--tx2);line-height:1.65}
+.card li{margin-bottom:5px}
+.card .lbl{font:600 10px/1 var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--tx3);
+  margin:14px 0 7px;display:block}
+
+/* ---------- ROOT CAUSE ---------- */
+.rc{background:var(--bg2);border:1px solid var(--line);border-left:3px solid var(--crit);
+  border-radius:0 10px 10px 0;padding:19px 22px;margin-bottom:14px}
+.rc.high{border-left-color:var(--warn)} .rc.med{border-left-color:var(--neu)}
+.rc .hd{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px}
+.rc .rank{font:700 19px/1 var(--mono);color:var(--tx3);flex:0 0 auto;padding-top:1px}
+.rc .ttl{font-size:16px;font-weight:640;line-height:1.35;flex:1}
+.rc .sec{margin-top:13px}
+.rc .sec .lbl{font:600 10px/1 var(--mono);letter-spacing:.09em;text-transform:uppercase;
+  color:var(--tx3);display:block;margin-bottom:6px}
+.rc .sec p{font-size:13.2px;color:var(--tx2);line-height:1.65}
+.rc .sec.fix{background:var(--bg3);border-radius:7px;padding:12px 14px;margin-top:14px}
+.rc .sec.fix .lbl{color:var(--ok)}
+.rc .sec.fix p{color:var(--tx)}
+
+/* ---------- ROADMAP ---------- */
+.month{margin-bottom:34px}
+.month>.mh{font-size:17px;font-weight:660;color:var(--ac2);padding-bottom:11px;
+  border-bottom:1px solid var(--line);margin-bottom:16px}
+.wk{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:17px 20px;margin-bottom:12px}
+.wk .wh{display:flex;flex-wrap:wrap;align-items:center;gap:11px;margin-bottom:13px}
+.wk .wn{font:700 11px/1 var(--mono);letter-spacing:.07em;background:var(--ac);color:#08101f;
+  padding:5px 9px;border-radius:4px}
+.wk .wt{font-size:14.5px;font-weight:600}
+.wk .wo{font:500 11px/1 var(--mono);color:var(--tx3);margin-left:auto}
+.wk ol{margin-left:18px;font-size:13.2px;color:var(--tx2);line-height:1.66}
+.wk li{margin-bottom:9px}
+.wk li::marker{color:var(--tx3);font-family:var(--mono);font-size:11px}
+
+/* ---------- CHART ---------- */
+.chart{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:20px 22px;margin-bottom:18px}
+.chart .ct{font-size:14px;font-weight:620;margin-bottom:4px}
+.chart .cs{font-size:12.5px;color:var(--tx3);margin-bottom:16px}
+.bar{display:grid;grid-template-columns:132px 1fr 82px;align-items:center;gap:11px;margin-bottom:7px}
+.bar .bn{font-size:12.5px;color:var(--tx2);text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar .bt{height:19px;background:var(--bg3);border-radius:3px;overflow:hidden}
+.bar .bf{height:100%;border-radius:3px;background:var(--ac);transition:width .5s ease}
+.bar .bv{font:600 12px/1 var(--mono);color:var(--tx2);text-align:right}
+.bar.me .bn{color:var(--crit);font-weight:700}
+.bar.me .bf{background:var(--crit)}
+.bar.me .bv{color:var(--crit)}
+
+/* ---------- MISC ---------- */
+.legend{display:flex;flex-wrap:wrap;gap:16px;font-size:12px;color:var(--tx3);margin-bottom:14px}
+.legend span{display:flex;align-items:center;gap:6px}
+.dot{width:9px;height:9px;border-radius:2px;display:inline-block}
+details{background:var(--bg2);border:1px solid var(--line);border-radius:9px;margin-bottom:10px;overflow:hidden}
+summary{padding:14px 18px;cursor:pointer;font-size:14px;font-weight:590;list-style:none;
+  display:flex;align-items:center;gap:11px;transition:background .12s}
+summary::-webkit-details-marker{display:none}
+summary:hover{background:var(--bg3)}
+summary::before{content:"▸";color:var(--tx3);font-size:12px;transition:transform .15s}
+details[open] summary::before{transform:rotate(90deg)}
+details .body{padding:0 18px 18px;border-top:1px solid var(--line);padding-top:16px}
+.kv{display:grid;grid-template-columns:150px 1fr;gap:8px 16px;font-size:13.2px;line-height:1.6}
+.kv .k{font:600 10.5px/1.6 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--tx3)}
+.kv .v{color:var(--tx2)}
+.controls{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:14px;align-items:center}
+.controls input{background:var(--bg2);border:1px solid var(--line);border-radius:7px;color:var(--tx);
+  padding:9px 13px;font:14px inherit;min-width:250px;flex:1;max-width:400px}
+.controls input:focus{outline:none;border-color:var(--ac)}
+.fbtn{background:var(--bg2);border:1px solid var(--line);color:var(--tx2);font:500 12.5px/1 inherit;
+  padding:9px 13px;border-radius:7px;cursor:pointer;transition:all .12s}
+.fbtn:hover{border-color:var(--line2);color:var(--tx)}
+.fbtn.on{background:rgba(91,141,239,.14);border-color:var(--ac);color:var(--ac2)}
+footer{border-top:1px solid var(--line);padding:26px 28px 40px;color:var(--tx3);font-size:12.5px;line-height:1.7}
+.fwrap{max-width:1480px;margin:0 auto}
+@media(max-width:720px){
+  h1{font-size:23px} main{padding:24px 16px 70px} header{padding:28px 16px 24px}
+  .kpis{padding:0 16px} .nwrap{padding:0 16px} .kv{grid-template-columns:1fr}
+  .bar{grid-template-columns:98px 1fr 66px}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="hwrap">
+    <div class="eyebrow">Competitive Reverse Engineering · Groto · letsgroto.com</div>
+    <h1>Why Groto ranks but doesn't get hired</h1>
+    <p class="sub">A full ICP-capture teardown of 12 competitors and letsgroto.com — site architecture, keyword targeting, conversion mechanics, trust architecture — followed by a root-cause diagnosis and a specific, buildable 90-day strategy. Every finding traces to a live crawl, a raw HTML extraction, a Semrush pull, or a verified SERP.</p>
+    <div class="meta">
+      <span class="pill">Semrush US database · Aug 2026</span>
+      <span class="pill">13 domains · 6 deep · 6 benchmarked</span>
+      <span class="pill">~7,900 URLs enumerated from live sitemaps</span>
+      <span class="pill">45 buyer queries SERP-verified</span>
+      <span class="pill">55 PAA questions harvested</span>
+    </div>
+  </div>
+</header>
+
+<div class="kpis">
+  <div class="kpi c"><div class="l">Commercial traffic / mo</div><div class="v">63</div><div class="d">vs NeuronUX 7,387 on a similar keyword base</div></div>
+  <div class="kpi c"><div class="l">Top-3 rankings</div><div class="v">1</div><div class="d">across the entire 383-URL domain</div></div>
+  <div class="kpi c"><div class="l">Traffic per keyword</div><div class="v">0.27</div><div class="d">worst of all 13 domains analysed</div></div>
+  <div class="kpi c"><div class="l">Monthly traffic value</div><div class="v">$500</div><div class="d">Superside's is worth 409× more</div></div>
+  <div class="kpi c"><div class="l">Blog → service links</div><div class="v">0</div><div class="d">across 12 of 12 buyer posts audited</div></div>
+  <div class="kpi c"><div class="l">Case studies with a result</div><div class="v">0 / 13</div><div class="d">not one carries an outcome metric</div></div>
+  <div class="kpi w"><div class="l">Broken commercial URLs</div><div class="v">20</div><div class="d">indexed, in sitemap, cannibalising real pages</div></div>
+  <div class="kpi g"><div class="l">Open SERP lanes found</div><div class="v">9</div><div class="d">no strong agency page currently ranks</div></div>
+</div>
+
+<nav><div class="nwrap" id="nav"></div></nav>
+
+<main>
+
+<!-- ============ OVERVIEW ============ -->
+<div class="pane on" id="p-overview">
+  <section>
+    <h2>The finding, stated plainly</h2>
+    <div class="callout crit">
+      <span class="ct">The brief's premise needs correcting</span>
+      The working assumption was that Groto ranks for informational content while competitors rank for high-intent ICP pages, and that the fix is to build ICP pages. The data says something different and more urgent. <strong>Groto already has the ICP pages.</strong> Seven service pages. Six industry pages including SaaS and AI. A pricing page publishing exact monthly rates — something Clay, NeuronUX, Lollypop and Parallel HQ all refuse to do. Two competitor-alternative posts, one of which already ranks. Thirteen case studies. Seventy-nine location pages.
+      <br><br>
+      The problem is not that the pages don't exist. It is that <strong>they are unreachable, unsupported, and unproven.</strong> Nothing links to them from the content that earns traffic. Twenty broken duplicate URLs compete with them for the same terms. And not one of the thirteen case studies meant to close the sale contains a single number.
+    </div>
+
+    <div class="grid g3">
+      <div class="card">
+        <h4>1 · The bridge does not exist</h4>
+        <p>Twelve buyer-intent blog posts audited by byte-offset analysis of the raw HTML. <strong>Zero in-body links</strong> to any service, industry, pricing or contact page. Every commercial link on letsgroto.com sits in the global nav or footer of a 3.8&nbsp;MB document.</p>
+        <p style="margin-top:10px;color:var(--tx3)">Eleken places 2–3 CTA boxes per post, each worded to the section above it. Superside places 10–25 exact-match anchors. Even Ramotion — the designated failure case in this analysis — manages 6–8.</p>
+      </div>
+      <div class="card">
+        <h4>2 · Twenty broken URLs are eating the real ones</h4>
+        <p><code>/saas-design</code>, <code>/ai-design</code>, <code>/health-care</code>, <code>/finance</code>, <code>/e-commerce</code> and fifteen more all render the Projects template with <strong>H1 = "Projects"</strong>, regardless of what their title tags promise. All twenty remain in the sitemap. Google surfaces <code>/artificial-intelligence</code> — one of the broken ones — as a top result for the domain.</p>
+        <p style="margin-top:10px;color:var(--tx3)">Three separate URLs currently compete for the concept "SaaS".</p>
+      </div>
+      <div class="card">
+        <h4>3 · There is no proof</h4>
+        <p>Thirteen of thirteen case studies contain no outcome metric. The only two numbers in the entire set describe the <em>problem</em> and never resolve it. Groto's homepage schema claims a 2.3× conversion lift for IVHQ — <strong>and IVHQ has no case study page.</strong></p>
+        <p style="margin-top:10px;color:var(--tx3)">That same schema block advises buyers that "red flags are portfolios with no measurable outcomes."</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Where Groto sits in the field</h2>
+    <p class="lede">Thirteen domains, Semrush US database. The chart that matters is not traffic — it is how efficiently each domain converts its keyword footprint into buyer-intent visits.</p>
+    <div id="charts"></div>
+  </section>
+
+  <section>
+    <h2>What the competitive set actually proves</h2>
+    <div class="grid g2">
+      <div class="card">
+        <h4>Site size is not the lever</h4>
+        <p>NeuronUX runs <strong>140 URLs</strong> and captures 7,387 commercial visits. Ramotion runs <strong>1,320 URLs</strong> and captures 1,422. Groto runs 383 and captures 63. Concentration beats volume — the three highest commercial-share domains in the set (Thomas Digital 87%, Clay 69%, NeuronUX 68%) are all among the four smallest.</p>
+      </div>
+      <div class="card">
+        <h4>Self-ranking listicles are the category norm</h4>
+        <p>Eleken, Superside, Clay, NeuronUX and Parallel HQ all publish their own "best agency" roundups and place themselves at #1 with a disclosed methodology. NeuronUX's SF listicle ranks on page 1 alongside Clutch. Groto has three such posts already written — none of which links to anything Groto sells.</p>
+      </div>
+      <div class="card">
+        <h4>Location pages work — pointed at the right places</h4>
+        <p>Parallel HQ crosses 6 service types with ~21 US metros for ~150 commercial pages and converts 1,633 buyer visits from just 6,363 keywords. Groto has 79 location pages across two duplicate systems, aimed at Des Moines, Fort Myers, Norfolk, Lancaster and York.</p>
+      </div>
+      <div class="card">
+        <h4>The India-to-US lane is wide open</h4>
+        <p>Lollypop's <code>/ui-ux-design-agency-in-usa/</code> is the strongest India-to-US page in the benchmark. But the query "UI UX design company India for US clients" returns a LinkedIn post and three directories in its top five. <strong>No premium boutique has built this page</strong> — and it is the closest query in the entire map to Groto's actual structural identity.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>What happens in the next 90 days</h2>
+    <div class="grid g3">
+      <div class="card"><h4>Month 1 — Foundation</h4><p>Stop the bleeding before building. Redirect the 20 broken URLs. Retrofit internal links into the 12 buyer posts. Build the IVHQ case study. Collapse 79 location pages to 6 real metros.</p><p style="margin-top:10px;color:var(--tx3)"><strong>No new pages in Month 1.</strong> Every new page built on the current foundation inherits the same defects.</p></div>
+      <div class="card"><h4>Month 2 — Build</h4><p>The AI positioning pages Groto's own homepage title claims but has never built. The India-for-US wedge page. A real pricing page. Four comparison pages. A UX audit service page.</p></div>
+      <div class="card"><h4>Month 3 — Scale</h4><p>Self-ranking listicles. Remaining service pages. Answer-first restructuring for AI Overview capture. Then measure against the Day 0 baseline recorded in this dashboard and decide the next 90 days from data.</p></div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ BASELINE ============ -->
+<div class="pane" id="p-baseline">
+  <section>
+    <h2><span class="tag">DATA</span> Competitive baseline</h2>
+    <p class="lede">Semrush US database, August 2026. Sortable — click any column header. Groto is highlighted throughout.</p>
+    <div class="note"><strong>Reading this table:</strong> "Comm. traffic" is monthly organic visits from commercial-intent keywords — the closest available proxy for buyer traffic. "Comm./1k KW" normalises that against keyword footprint and is the single most diagnostic column: it measures how well a domain converts rankings into buyers, independent of size.</div>
+    <div class="tw"><table id="tbl-baseline"></table></div>
+    <div class="callout warn" style="margin-top:18px">
+      <span class="ct">The Ramotion parallel</span>
+      Ramotion converts 61 commercial visits per 1,000 keywords. Groto converts 60. They are the same failure mode — a large informational footprint with no working path to the commercial pages — except Ramotion is running it at 22× the scale. Ramotion is what Groto becomes if it keeps publishing without fixing the bridge.
+    </div>
+  </section>
+</div>
+
+<!-- ============ ARCHITECTURE ============ -->
+<div class="pane" id="p-arch">
+  <section>
+    <h2><span class="tag">PHASE 1–2</span> Groto site architecture</h2>
+    <p class="lede">383 URLs enumerated from <code>letsgroto.com/sitemap.xml</code>. Single flat sitemap, no sitemap index, and — critically — <strong>no <code>&lt;lastmod&gt;</code> on any of the 383 URLs.</strong> Platform: Framer.</p>
+    <div class="tw"><table id="tbl-arch"></table></div>
+
+    <h3>Which ICP page types Groto has, partially has, or lacks</h3>
+    <div class="tw"><table id="tbl-gap"></table></div>
+
+    <div class="callout crit" style="margin-top:20px">
+      <span class="ct">The 20 broken URLs, in full</span>
+      <code>/ai-design</code> <code>/saas-design</code> <code>/ux-design</code> <code>/health-care</code> <code>/finance</code> <code>/e-commerce</code> <code>/brand-design</code> <code>/web-design</code> <code>/saas</code> <code>/mobile-app-design</code> <code>/business-consulting</code> <code>/market-place</code> <code>/web-3</code> <code>/ed-tech</code> <code>/hr-tech</code> <code>/insurtech</code> <code>/artificial-intelligence</code> <code>/support</code> <code>/tools-resources</code> <code>/development</code>
+      <br><br>
+      Every one renders the <code>/projects</code> portfolio template with H1 = "Projects", 485–1,392 words, regardless of what the title tag promises. A page titled "Artificial Intelligence Development Services" has the H1 "Projects". All twenty are still in the sitemap and still indexed. This is roughly one day of redirect work that resolves keyword cannibalisation across six separate commercial concepts simultaneously.
+    </div>
+
+    <div class="grid g2" style="margin-top:20px">
+      <div class="card">
+        <h4>Structural defects found</h4>
+        <ul>
+          <li><strong>4 H1 tags</strong> on the homepage, 3 on <code>/services</code> — Framer breakpoint duplication</li>
+          <li><strong>Zero H1</strong> on <code>/contact</code></li>
+          <li><code>BreadcrumbList</code> schema contains a single item ("Home") — not a functional breadcrumb</li>
+          <li>4 title tags exceed 60 characters; worst is 91 on <code>/blog/ui-ux-design-agencies-in-india</code></li>
+          <li>Blog documents weigh <strong>3.77–3.87 MB of raw HTML each</strong> from breakpoint duplication</li>
+          <li>Two competing title formulas live simultaneously across the location pages</li>
+          <li>Malformed slug: <code>/projects/redesign-nicotex-begin-with---ux-strategy</code></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Schema present vs missing</h4>
+        <span class="lbl">Present</span>
+        <p><code>Organization</code> · <code>WebSite</code> · <code>Service</code> · <code>Offer</code> · <code>BreadcrumbList</code> · <code>FAQPage</code> (homepage + 2 industry pages + blog only) · <code>BlogPosting</code> · <code>CreativeWork</code> · <code>Person</code> · <code>ContactPoint</code></p>
+        <span class="lbl">Missing — and every one is used by a competitor</span>
+        <p><code>FAQPage</code> on all 7 service pages and 4 of 6 industry pages · <code>Review</code> and <code>AggregateRating</code> sitewide despite an on-page 4.9 Clutch claim · <code>LocalBusiness</code> despite 79 city pages · structured <code>author</code> inside <code>BlogPosting</code> despite real visible bylines</p>
+      </div>
+    </div>
+
+    <div class="callout ok" style="margin-top:18px">
+      <span class="ct">Genuine strengths worth protecting</span>
+      Real named authors with titles and linked bio pages on every post — better E-E-A-T infrastructure than Thomas Digital or Clay. A pricing page publishing exact monthly rates, which Clay, NeuronUX, Lollypop, Parallel HQ and Thunderclap all decline to do. Substantial, well-written buyer-stage content shipped April–July 2026 — the content <em>type</em> is right. FAQPage schema already correctly applied on the SaaS and AI industry pages. The strategy pivot has already happened; the wiring hasn't.
+    </div>
+  </section>
+</div>
+
+<!-- ============ COMPARISON ============ -->
+<div class="pane" id="p-compare">
+  <section>
+    <h2><span class="tag">PHASE 7</span> Competitors vs Groto</h2>
+    <p class="lede">Every dimension analysed, six deep competitors plus Parallel HQ, against Groto. Critical gaps flagged.</p>
+    <div class="legend">
+      <span><i class="dot" style="background:var(--crit)"></i> Critical gap</span>
+      <span><i class="dot" style="background:var(--warn)"></i> Behind</span>
+      <span><i class="dot" style="background:var(--ok)"></i> At parity or ahead</span>
+    </div>
+    <div class="tw"><table id="tbl-compare"></table></div>
+  </section>
+</div>
+
+<!-- ============ ROOT CAUSE ============ -->
+<div class="pane" id="p-root">
+  <section>
+    <h2><span class="tag">PHASE 8</span> Root cause analysis</h2>
+    <p class="lede">Ten causes, ranked by impact on ICP capture. Each states the evidence, what competitors do instead, and the specific fix. Nothing here is softened.</p>
+    <div id="rootcause"></div>
+  </section>
+</div>
+
+<!-- ============ BRIDGE ============ -->
+<div class="pane" id="p-bridge">
+  <section>
+    <h2><span class="tag">PHASE 9C</span> The bridge strategy</h2>
+    <p class="lede">This is the highest-leverage work in the entire plan, and it requires no new pages. Groto already ranks for buyer-stage queries — those rankings currently dead-end.</p>
+
+    <div class="callout ok">
+      <span class="ct">The mechanism to copy — Eleken's, verified across 8 posts</span>
+      <strong>1 · Post-intro CTA box</strong> immediately after the intro, before any educational content. <em>"Looking for a website that works as hard as you do? We'll create it for you. [Book a call]"</em><br><br>
+      <strong>2 · Topically matched inline links.</strong> Each section links to the one service or case study matching <em>that section's topic</em> — not a boilerplate footer set. The link fires at the moment the reader's context matches a vertical.<br><br>
+      <strong>3 · Multiple micro-CTA boxes per long post</strong>, each worded to the section immediately above it. Their 8,700-word UX-research post carries three: <em>"Let us find the UX gaps hurting your product's performance → Start your audit with Eleken"</em> → <code>/ux-audit-service</code>, and <em>"Build your MVP with research-driven UX design → Let's validate your ideas together"</em> → <code>/engagement/mvp-design-for-saas</code>.<br><br>
+      <strong>4 · Closing CTA</strong> restating the full value proposition.
+    </div>
+
+    <div class="callout crit">
+      <span class="ct">The mechanism to avoid — Ramotion's, and Groto's is worse</span>
+      Ramotion reuses the same five generic anchors ("Branding", "Web design", "UX design", "Design system", "Web app development") on every post regardless of topic, and its only in-content conversion ask is a newsletter signup. Result: 12,205 informational visits producing 1,422 commercial. <strong>Groto has zero in-body links at all</strong> — the same failure mode, one step further down.
+    </div>
+
+    <h3>Cluster-by-cluster wiring plan</h3>
+    <div class="tw"><table id="tbl-bridge"></table></div>
+  </section>
+</div>
+
+<!-- ============ BUILD PLAN ============ -->
+<div class="pane" id="p-build">
+  <section>
+    <h2><span class="tag">PHASE 9A</span> ICP page build plan</h2>
+    <p class="lede">Prioritised by search demand, buyer intent, and gap versus competitors — not by ease of building. Every row names a real competitor page to study.</p>
+
+    <div class="callout warn">
+      <span class="ct">Sequencing note</span>
+      Priority 1 pages ship in Month 2, not Month 1. Month 1 is remediation — redirects, internal links, proof, location consolidation. A new page built on the current foundation inherits the same defects that are suppressing the existing 26 commercial pages.
+    </div>
+
+    <h3>Priority 1 — build immediately (Month 2)</h3>
+    <div class="tw"><table id="tbl-p1"></table></div>
+
+    <h3>Priority 2 — 30–60 days</h3>
+    <div class="tw"><table id="tbl-p2"></table></div>
+
+    <h3>Priority 3 — 60–90 days</h3>
+    <div class="tw"><table id="tbl-p3"></table></div>
+  </section>
+
+  <section>
+    <h2><span class="tag">PHASE 9B</span> Keyword strategy per page</h2>
+    <p class="lede">PAA questions below were harvested from live SERPs and the FAQ blocks of currently ranking pages — they are observed, not invented. No search volumes are stated anywhere: Semrush API units were exhausted mid-analysis, and inventing volume figures would be worse than omitting them.</p>
+    <div class="tw"><table id="tbl-kw"></table></div>
+  </section>
+</div>
+
+<!-- ============ CASE STUDIES ============ -->
+<div class="pane" id="p-cases">
+  <section>
+    <h2><span class="tag">PHASE 9D</span> Case study strategy</h2>
+    <div class="callout crit">
+      <span class="ct">Zero of thirteen</span>
+      Not one Groto case study contains an outcome metric. The only two numbers in the entire set — "80% of users browsing on mobile" and "62% didn't scroll past section 2" — describe the problem and never resolve it.
+      <br><br>
+      Meanwhile Groto's homepage FAQ schema states: <em>"Every metric on this site traces to a named client engagement, not an internal estimate"</em> and cites <em>"the IVHQ engagement produced a 2.3X conversion rate increase and 1.25X improvement in customer retention."</em> <strong>IVHQ has no case study page.</strong> The one hard number the agency owns lives inside JSON-LD, invisible to any human reading the page.
+      <br><br>
+      The same schema block advises prospects to ask for "a case study in your product category with named metrics" and warns that "red flags are portfolios with no measurable outcomes." It is an accurate description of Groto's own portfolio.
+    </div>
+
+    <div class="callout ok">
+      <span class="ct">Which is also the opportunity</span>
+      No competitor in this set has solved case studies either. Thomas Digital: 0 of 11 with metrics. Clay: 1 of 4. NeuronUX: 4 of 11 — the best in the set, at 36%. If Groto ships 13 of 13 with quantified outcomes, it holds a proof position <em>nobody</em> in the category currently occupies. This is the cheapest genuine differentiation available.
+    </div>
+
+    <div class="tw"><table id="tbl-cases"></table></div>
+  </section>
+</div>
+
+<!-- ============ SERP ============ -->
+<div class="pane" id="p-serp">
+  <section>
+    <h2><span class="tag">PHASE 6</span> Live SERP reality check</h2>
+    <p class="lede">Ten buyer queries checked against live US search results. Groto appears in the top 10 for two — and both are blog posts. <strong>Zero commercial or service pages surface for any buyer query tested.</strong></p>
+    <div class="tw"><table id="tbl-serp"></table></div>
+    <div class="callout crit" style="margin-top:18px">
+      <span class="ct">Groto does not rank for its own positioning</span>
+      The homepage title tag reads <em>"Groto | UX for AI Products, Agents &amp; Dashboards."</em> A live search for <strong>"dashboard UX design agency"</strong> returns zero Groto presence. Eleken owns it outright with a dedicated page. There is no standalone crawlable page for AI dashboards, AI agents or AI copilots anywhere on letsgroto.com — that positioning exists only as answer text inside homepage FAQ schema.
+    </div>
+  </section>
+
+  <section>
+    <h2>Open lanes — where nobody strong ranks</h2>
+    <p class="lede">Queries where the SERP is directories, LinkedIn posts, generic staffing content, or off-topic tools. These are the highest-priority build targets because the entry bar is structure, not authority.</p>
+    <div class="tw"><table id="tbl-lanes"></table></div>
+  </section>
+</div>
+
+<!-- ============ COMPETITORS ============ -->
+<div class="pane" id="p-profiles">
+  <section>
+    <h2><span class="tag">PHASE 2–6</span> Competitor profiles</h2>
+    <p class="lede">Six deep teardowns and six benchmarks. Each names the specific mechanic to copy and the specific mistake not to inherit.</p>
+    <div class="controls">
+      <button class="fbtn on" data-pf="all">All 12</button>
+      <button class="fbtn" data-pf="deep">Deep analysis (6)</button>
+      <button class="fbtn" data-pf="bench">Benchmarked (6)</button>
+    </div>
+    <div id="profiles"></div>
+  </section>
+</div>
+
+<!-- ============ ROADMAP ============ -->
+<div class="pane" id="p-roadmap">
+  <section>
+    <h2><span class="tag">PHASE 9E</span> 90-day execution roadmap</h2>
+    <p class="lede">Twelve weeks, designed to run alongside existing client delivery. Each task names what to do, which URL it applies to, the expected outcome, and who owns it.</p>
+    <div class="callout warn">
+      <span class="ct">Read this before Week 1</span>
+      Month 1 ships <strong>no new pages</strong>. That will feel wrong. It is the correct sequence: Groto already has 26 commercial pages that Google is suppressing because 20 broken URLs compete with them, nothing links to them, and no case study proves them. Building page 27 first would inherit all three defects.
+    </div>
+    <div id="roadmap"></div>
+  </section>
+
+  <section>
+    <h2>Pre-publish checklist</h2>
+    <p class="lede">Every new or rebuilt page passes this before it ships. Each line derives from a specific defect found in this analysis — in Groto's site or a competitor's.</p>
+    <div class="tw"><table id="tbl-check"></table></div>
+  </section>
+</div>
+
+</main>
+
+<footer><div class="fwrap">
+  <strong>Sources and method.</strong> Domain-level metrics from the Semrush US database via <code>domain_rank</code>, pulled 18 August 2026, including intent-split and SERP-feature columns. Site architecture from live <code>sitemap.xml</code> enumeration via curl across all 13 domains (~7,900 URLs). Page-level structure, title tags, meta descriptions, heading hierarchy and JSON-LD schema extracted from raw HTML, not from rendered summaries. Ranking positions verified against live US search results on 18 August 2026.
+  <br><br>
+  <strong>Known limits.</strong> Semrush API units were exhausted partway through the deep-competitor phase, so keyword-level and page-level traffic exports could not be pulled for individual competitor URLs — those sections rely on live crawling and SERP verification, and are marked accordingly in the source reports. The Ahrefs connection returned "insufficient plan" on every endpoint, so no backlink or Domain Rating data is included anywhere in this analysis; backlink observations are structural inferences only. <strong>No search volume or keyword difficulty figure is stated anywhere in this dashboard</strong> — demand and difficulty are described through observed SERP composition instead. Connecting Google Search Console would replace the estimated ranking picture with Groto's real query and click data and is the single highest-value addition to this analysis.
+</div></footer>
+<script>
+/* ============================================================
+   GROTO ICP SEO INTELLIGENCE — DATA LAYER
+   Sources: Semrush US database (domain_rank, Aug 2026),
+   live sitemap crawls, raw HTML/JSON-LD extraction, live SERP checks.
+   ============================================================ */
+
+const BASELINE = [
+  // name, domain, kw, traffic, value, pos13, pos410, commKW, infoKW, commTraffic, infoTraffic, snippets, paa, aio, localpack, pages, tier
+  {n:"Superside",         d:"superside.com",        kw:28140, tr:41774, val:204737, p13:1206, p410:3960, ck:10105, ik:19159, ct:13415, it:25721, fs:123, paa:18373, aio:19394, lp:7118, pages:1180, tier:"deep"},
+  {n:"Ramotion",          d:"ramotion.com",         kw:23446, tr:13410, val:65537,  p13:309,  p410:2044, ck:4444,  ik:19797, ct:1422,  it:12205, fs:189, paa:18409, aio:19175, lp:2865, pages:1320, tier:"deep"},
+  {n:"ManyPixels",        d:"manypixels.co",        kw:17684, tr:13058, val:34312,  p13:356,  p410:1830, ck:4066,  ik:14426, ct:1400,  it:11978, fs:70,  paa:13445, aio:12050, lp:1396, pages:840,  tier:"bench"},
+  {n:"Eleken",            d:"eleken.co",            kw:13627, tr:15859, val:44312,  p13:424,  p410:2058, ck:2913,  ik:11444, ct:4474,  it:12717, fs:45,  paa:9345,  aio:10496, lp:929,  pages:684,  tier:"deep"},
+  {n:"Parallel HQ",       d:"parallelhq.com",       kw:6363,  tr:8249,  val:45889,  p13:129,  p410:972,  ck:1729,  ik:4816,  ct:1633,  it:6817,  fs:62,  paa:4754,  aio:5043,  lp:1354, pages:1087, tier:"bench"},
+  {n:"DesignStudioUIUX",  d:"designstudiouiux.com", kw:3896,  tr:1505,  val:4000,   p13:24,   p410:134,  ck:1104,  ik:3052,  ct:172,   it:1360,  fs:16,  paa:2284,  aio:3100,  lp:638,  pages:248,  tier:"bench"},
+  {n:"Clay",              d:"clay.global",          kw:3590,  tr:6743,  val:37885,  p13:35,   p410:206,  ck:1623,  ik:2119,  ct:4266,  it:1879,  fs:28,  paa:2024,  aio:2625,  lp:1398, pages:308,  tier:"deep"},
+  {n:"Thomas Digital",    d:"thomasdigital.com",    kw:2890,  tr:5462,  val:36118,  p13:123,  p410:159,  ck:1867,  ik:1266,  ct:4687,  it:696,   fs:12,  paa:1277,  aio:1673,  lp:1147, pages:214,  tier:"deep"},
+  {n:"Lollypop",          d:"lollypop.design",      kw:2504,  tr:10839, val:129637, p13:74,   p410:324,  ck:533,   ik:2061,  ct:369,   it:10182, fs:13,  paa:1614,  aio:1971,  lp:315,  pages:647,  tier:"bench"},
+  {n:"NeuronUX",          d:"neuronux.com",         kw:2441,  tr:10771, val:67764,  p13:167,  p410:194,  ck:1264,  ik:1299,  ct:7387,  it:3410,  fs:16,  paa:1251,  aio:1782,  lp:1543, pages:140,  tier:"deep"},
+  {n:"GROTO",             d:"letsgroto.com",        kw:1048,  tr:288,   val:500,    p13:1,    p410:37,   ck:444,   ik:662,   ct:63,    it:274,   fs:10,  paa:676,   aio:691,   lp:328,  pages:383,  tier:"groto"},
+  {n:"Thunderclap",       d:"thethunderclap.com",   kw:931,   tr:689,   val:7397,   p13:15,   p410:132,  ck:448,   ik:590,   ct:425,   it:570,   fs:3,   paa:419,   aio:719,   lp:235,  pages:194,  tier:"bench"},
+  {n:"Designjoy",         d:"designjoy.co",         kw:201,   tr:1467,  val:8329,   p13:43,   p410:24,   ck:69,    ik:137,   ct:541,   it:1254,  fs:0,   paa:96,   aio:138,   lp:21,   pages:2,    tier:"bench"}
+];
+
+/* ---------- PHASE 1: GROTO SITE ARCHITECTURE ---------- */
+const GROTO_ARCH = [
+  {t:"Blog posts", path:"/blog/*", n:237, icp:"Informational", note:"~12 buyer-stage posts, ~40 SaaS/AI-adjacent, ~185 generic UX education. Zero in-body links to commercial pages."},
+  {t:"Location pages — system A", path:"/web-design/[city]/", n:41, icp:"Adjacent", note:"40 US cities + hub. Groto has no office in any. ~75% textual similarity between samples."},
+  {t:"Location pages — system B", path:"/ui-ux-design/[city]", n:39, icp:"Adjacent", note:"Second near-duplicate system. 37 cities appear in BOTH systems. Two live title formulas simultaneously."},
+  {t:"Broken legacy stubs", path:"20 top-level URLs", n:20, icp:"BROKEN", note:"/ai-design, /saas-design, /ux-design, /health-care, /finance, /e-commerce, /brand-design, /web-design, /saas, /mobile-app-design, /business-consulting, /market-place, /web-3, /ed-tech, /hr-tech, /insurtech, /artificial-intelligence, /support, /tools-resources, /development — ALL render the Projects template, H1 = 'Projects', 485–1,392 words. Still in sitemap. Still indexed."},
+  {t:"Case studies", path:"/projects/*", n:14, icp:"Direct ICP", note:"13 studies + hub. 1,226–2,156 words. ZERO contain an outcome metric. Not linked from any service page."},
+  {t:"Service pages", path:"/services/*", n:8, icp:"Direct ICP", note:"7 real pages, 1,480–1,615 words, 10–15 H2s. Service/Offer/BreadcrumbList schema. NO FAQPage schema on any of them."},
+  {t:"Author bios", path:"/author/*", n:8, icp:"Informational", note:"Real named authors with titles — a genuine E-E-A-T strength."},
+  {t:"Industry pages", path:"/industry/*", n:7, icp:"Direct ICP (2) / Adjacent (4)", note:"SaaS (1,879w) and AI (1,747w) carry FAQPage+Audience+OfferCatalog schema. Fintech, healthcare, ecommerce, dev-tools do NOT — and each is cannibalised by a broken legacy stub."},
+  {t:"Core pages", path:"Homepage, /pricing, /our-story, /contact, legal", n:9, icp:"Direct ICP", note:"/pricing publishes real rates ($2,399/$4,399/$5,999 per month). /contact has ZERO H1. Homepage has 4 H1 tags."}
+];
+
+/* ---------- PHASE 7: COMPARISON ---------- */
+const COMPARISON = [
+  {a:"Total pages in sitemap",            td:"214",   nx:"140",  cl:"~308", el:"684",   ss:"1,180", rm:"1,320", ph:"1,087", gr:"383",   gap:"ok",   why:"Page count is NOT Groto's problem. Groto has more indexed pages than Thomas Digital and NeuronUX combined — both of which capture 70x its commercial traffic."},
+  {a:"Organic keywords (US)",             td:"2,890", nx:"2,441",cl:"3,590",el:"13,627",ss:"28,140",rm:"23,446",ph:"6,363", gr:"1,048", gap:"warn", why:"Lowest in the set, but NeuronUX proves 2,441 keywords is enough to produce 7,387 commercial visits."},
+  {a:"Monthly organic traffic",           td:"5,462", nx:"10,771",cl:"6,743",el:"15,859",ss:"41,774",rm:"13,410",ph:"8,249", gr:"288",   gap:"crit", why:"19x below the weakest deep competitor. Groto is effectively invisible in US organic search."},
+  {a:"Monthly traffic value",             td:"$36,118",nx:"$67,764",cl:"$37,885",el:"$44,312",ss:"$204,737",rm:"$65,537",ph:"$45,889",gr:"$500", gap:"crit", why:"Groto's entire organic footprint is worth $500/month. Superside's is worth 409x that."},
+  {a:"Keywords in positions 1–3",         td:"123",   nx:"167",  cl:"35",   el:"424",   ss:"1,206", rm:"309",   ph:"129",   gr:"1",     gap:"crit", why:"ONE top-3 ranking across the entire domain. Even Clay — which has the fewest of the competitors — has 35."},
+  {a:"Traffic per keyword",               td:"1.89",  nx:"4.41", cl:"1.88", el:"1.16",  ss:"1.48",  rm:"0.57",  ph:"1.30",  gr:"0.27",  gap:"crit", why:"Worst in the entire 13-domain set. Groto ranks broadly and shallowly — page 2–3 positions that generate no clicks."},
+  {a:"Commercial-intent traffic",         td:"4,687", nx:"7,387",cl:"4,266",el:"4,474", ss:"13,415",rm:"1,422", ph:"1,633", gr:"63",    gap:"crit", why:"The headline number. 63 commercial visits per month against 444 commercial-intent ranking positions."},
+  {a:"Commercial traffic per 1,000 KW",   td:"1,622", nx:"3,026",cl:"1,188",el:"328",   ss:"477",   rm:"61",    ph:"257",   gr:"60",    gap:"crit", why:"Groto converts keywords into buyer traffic at exactly Ramotion's failure rate — the cautionary tale of the set — but at 4% of Ramotion's scale."},
+  {a:"ICP / commercial pages",            td:"~66",   nx:"~34",  cl:"~105", el:"~26",   ss:"~35",   rm:"~38",   ph:"~355",  gr:"26",    gap:"warn", why:"Comparable to Eleken and Superside in absolute count — but 20 of Groto's highest-intent commercial URLs are broken stubs, so the effective count is lower."},
+  {a:"Case studies",                      td:"11",    nx:"24",   cl:"38",   el:"77",    ss:"~15",   rm:"~65",   ph:"47",    gr:"13",    gap:"warn", why:"Volume is adequate for a boutique. Quality is the problem, not quantity."},
+  {a:"Case studies with outcome metrics", td:"0 / 11",nx:"4 / 11",cl:"1 / 4",el:"partial",ss:"most",rm:"partial",ph:"yes", gr:"0 / 13", gap:"crit", why:"ZERO of 13. The only hard metric Groto owns (IVHQ: 2.3x conversion, 1.25x retention) is buried inside homepage JSON-LD with no case study page behind it."},
+  {a:"Comparison / alternative pages",    td:"0",     nx:"0",    cl:"0",    el:"3",     ss:"6",     rm:"0",     ph:"13 + ~30", gr:"2 (blog only)", gap:"warn", why:"Groto has the content but not the architecture — both live under /blog/ with zero links to any commercial page."},
+  {a:"Location pages",                    td:"0 (retired)",nx:"4",cl:"0",   el:"9 (as posts)",ss:"11 (as posts)",rm:"44",ph:"~150",gr:"79",gap:"crit",why:"Groto has the SECOND-LARGEST location footprint in the set — pointed at Des Moines, Fort Myers, Norfolk, Lancaster and York rather than SaaS buyer geography, across two duplicate systems."},
+  {a:"Publishes pricing",                 td:"Yes",   nx:"No",   cl:"No",   el:"Yes",   ss:"Yes",   rm:"Yes",   ph:"No",    gr:"Yes",   gap:"ok",   why:"Genuine strength. Groto publishes exact monthly rates — and ranks for nothing on pricing queries because the page is unreachable from its own pricing content."},
+  {a:"Avg word count, ICP pages",         td:"2,400–4,700",nx:"1,800–2,400",cl:"1,200–2,800",el:"2,200–3,800",ss:"2,100–7,000",rm:"3,000–4,500",ph:"1,100–1,400",gr:"1,480–1,894",gap:"warn",why:"Thin relative to the deep competitors. Ramotion's SaaS page is 3,516 words; Groto's is 1,583."},
+  {a:"Blog → service internal links",     td:"Sitewide module",nx:"Contextual + footer",cl:"Templated CTA block",el:"2–3 JTBD-matched CTA boxes per post",ss:"10–25 exact-match anchors",rm:"5 generic anchors + newsletter",ph:"Yes",gr:"ZERO",gap:"crit",why:"12 of 12 buyer-intent posts audited contain zero in-body links to any commercial page. Every commercial link on the site sits in global nav or footer. This is worse than Ramotion, the designated failure case."},
+  {a:"FAQPage schema on service pages",   td:"Partial",nx:"Yes", cl:"No",   el:"Yes",   ss:"No",    rm:"No",    ph:"Yes",   gr:"No (0 / 7)", gap:"crit", why:"Absent from all 7 service pages and 4 of 6 industry pages — exactly the pages competing for Groto's 676 PAA and 691 AI Overview opportunities."},
+  {a:"Review / AggregateRating schema",   td:"Yes (5.0, 142)",nx:"Yes",cl:"No",el:"No",ss:"No",rm:"No",ph:"Yes (4.8, 9)",gr:"No",gap:"crit",why:"Groto claims a 4.9 Clutch rating on-page and never encodes it. Parallel HQ ships 9 nested Review objects plus AggregateRating."},
+  {a:"Freshness signals",                 td:"lastmod present",nx:"lastmod present",cl:"updatedAt tracked",el:"'Updated on' visible",ss:"lastmod present",rm:"lastmod present",ph:"lastmod present",gr:"NONE",gap:"crit",why:"dateModified empty in every BlogPosting. No lastmod on any of 383 sitemap URLs. Google has zero freshness cue for the whole domain."},
+  {a:"Publishing cadence",                td:"~1/mo + batches",nx:"3–4/mo",cl:"10–12/mo",el:"~13.6/mo",ss:"High + refresh program",rm:"High historic",ph:"High",gr:"Sprint Q2 2026",gap:"ok",why:"Groto ran a real commercial-content sprint April–July 2026. The content type is right. It is simply never wired to anything."}
+];
+
+/* ---------- PHASE 8: ROOT CAUSE ---------- */
+const ROOTCAUSE = [
+  {r:1,sev:"CRITICAL",t:"The bridge from content to commercial pages does not exist at all",
+   ev:"12 of 12 buyer-intent blog posts audited (/blog/eleken-alternatives, /blog/superside-alternative, /blog/ux-agency-vs-in-house-designer, /blog/web-design-agency-pricing-guide, /blog/how-much-does-a-ux-audit-cost, /blog/saas-ux-redesign-cost, /blog/best-ux-design-agencies-us, /blog/best-ai-product-design-agencies-us, /blog/best-ux-agencies-for-saas-usa, /blog/ui-ux-design-agencies-in-india, /blog/what-is-ux-strategy-and-how-to-create-it, /blog/the-complete-guide-to-saas-ux-design) contain ZERO in-body links to /services/, /industry/, /pricing or /contact. Every commercial link was located by byte-offset analysis to sit in the global nav (~354K) or global footer (~3.44M) of a 3.8MB document.",
+   cf:"Eleken places 2–3 CTA boxes per long post, each worded to the section immediately above it ('Let us find the UX gaps hurting your product's performance → Start your audit with Eleken' → /ux-audit-service). Superside places 10–25 exact-match anchor links per post. Even Ramotion — the designated failure case — manages 6–8 generic links.",
+   fix:"Retrofit every buyer-stage post with 2–4 hand-placed contextual links using descriptive anchor text, plus one JTBD-matched in-content CTA block per major section."},
+  {r:2,sev:"CRITICAL",t:"Twenty broken legacy URLs are cannibalising the real commercial pages",
+   ev:"/ai-design, /saas-design, /ux-design, /health-care, /finance, /e-commerce, /brand-design, /web-design, /saas, /mobile-app-design, /business-consulting, /market-place, /web-3, /ed-tech, /hr-tech, /insurtech, /artificial-intelligence, /support, /tools-resources, /development all render the /projects portfolio template with H1 = 'Projects' regardless of what the title tag promises. All 20 remain in the sitemap. Google surfaces /artificial-intelligence as a top pick for a bare site:letsgroto.com query. /saas competes with BOTH /industry/saas-industry-... and /services/saas-ux-design-... for one concept.",
+   cf:"No competitor in the set has an equivalent defect. Clay's worst on-page issue is duplicate meta descriptions across 5 landing pages.",
+   fix:"301 all 20 to their live equivalents, purge from sitemap, verify no residual internal links. This is a one-day job that resolves the cannibalisation for six separate commercial concepts."},
+  {r:3,sev:"CRITICAL",t:"Zero proof — no case study carries an outcome metric",
+   ev:"13 of 13 case studies audited. The only two numbers found anywhere in the set describe the PROBLEM, not the result ('80% of users browsing on mobile', '62% didn't scroll past section 2'). Groto's homepage FAQ schema states 'Every metric on this site traces to a named client engagement' and cites 'the IVHQ engagement produced a 2.3X conversion rate increase and 1.25X improvement in customer retention' — IVHQ has no case study page anywhere on the site. The same FAQ block advises buyers that 'red flags are portfolios with no measurable outcomes'.",
+   cf:"NeuronUX: GOSTAR 67% faster, 30–60s to 10s; Listrak 118 → 16 nav items, 50% fewer emails; Flo 33M → 43M users; Realbricks 40% MoM growth. Clay: Sky 40% traffic, 30% engagement, 35% CSAT, 25% conversion. Parallel HQ puts 65% activation increase and 40% time-to-value reduction on the service page itself.",
+   fix:"Build the IVHQ case study first. Retrofit all 13 with a quantified outcome block. Stop making the 'every metric traces to a client' claim until it is true."},
+  {r:4,sev:"CRITICAL",t:"79 location pages aimed at the wrong geography, in two duplicate systems",
+   ev:"/web-design/[city]/ (40 cities) and /ui-ux-design/[city] (39 cities) run in parallel with 37 cities appearing in both, at ~75% textual similarity. Cities include Des Moines, Fort Myers, Norfolk, Lancaster and York. Two different title formulas are live simultaneously for the same URL pattern. No LocalBusiness schema anywhere despite 79 city pages existing.",
+   cf:"Parallel HQ runs 6 service types × ~21 US metros (SF, NYC, Austin, Seattle, Boston, Chicago, Denver, Dallas, Miami…) — roughly 150 pages — and converts 1,633 commercial visits from only 6,363 keywords. NeuronUX runs 4 city pages backed by 4 real staffed offices with distinct NAP, distinct local case studies and distinct sub-area copy.",
+   fix:"Collapse to one system. Keep 6–8 metros that match SaaS/AI buyer density. Rebuild each with real differentiation, LocalBusiness schema and locally relevant case studies. Noindex or remove the rest."},
+  {r:5,sev:"HIGH",t:"Groto does not rank for its own stated positioning",
+   ev:"Homepage title tag reads 'Groto | UX for AI Products, Agents & Dashboards'. A live search for 'dashboard UX design agency' returns zero Groto presence — Eleken owns it outright with eleken.co/blog-posts/dashboard-ux-design-agency. There is no standalone crawlable page for AI dashboards, AI agents, or AI copilots anywhere on the site; that positioning exists only as answer text inside homepage FAQ schema.",
+   cf:"Eleken has /industries/ui-ux-design-for-ai-based-products AND a dedicated dashboard agency page. NeuronUX has /ai with 6 FAQ Q&As in schema.",
+   fix:"Build three use-case pages — AI Dashboard UX, AI Agent & Copilot UX, AI Onboarding UX. The homepage FAQ answers are already-written source material."},
+  {r:6,sev:"HIGH",t:"Schema is missing on precisely the pages that need it",
+   ev:"FAQPage schema is present on the homepage, the two SaaS/AI industry pages and blog posts — and absent from all 7 service pages and 4 of 6 industry pages. Review and AggregateRating schema absent sitewide despite an on-page '4.9 Clutch rating' claim. LocalBusiness absent despite 79 city pages. The homepage BreadcrumbList contains a single item ('Home') — not a functional breadcrumb.",
+   cf:"Lollypop ships Organization/ProfessionalService + WebSite + WebPage + BreadcrumbList + Service + VideoObject + 6 Review objects + FAQPage in one @graph. Parallel HQ ships AggregateRating 4.8/5 with 9 named Review objects.",
+   fix:"FAQPage on every service and industry page. Review + AggregateRating sitewide. Fix the breadcrumb. This is a week of work against 676 PAA and 691 AI Overview opportunities already in Groto's tracked set."},
+  {r:7,sev:"HIGH",t:"No freshness signal anywhere on 383 URLs",
+   ev:"dateModified is empty in every BlogPosting JSON-LD block checked. The sitemap carries no <lastmod> for any of the 383 URLs. Combined with a content history showing a genuine strategy pivot only in Q2 2026, Google and AI answer systems cannot distinguish maintained pages from abandoned ones.",
+   cf:"Clay refreshes its highest-value commercial listicles on a same-day sweep (all four pillars show updatedAt 2026-08-03). Eleken refreshes anything touching 'hire', 'cost', 'agency' or 'vs' every few months while letting pure definitional content sit since 2021.",
+   fix:"Populate dateModified on publish and update. Add lastmod to the sitemap. Show 'Updated [date]' visibly on buyer-stage posts."},
+  {r:8,sev:"HIGH",t:"Ranking breadth without ranking depth",
+   ev:"1,048 keywords, 444 of them commercial-intent, producing 63 commercial visits and exactly ONE position 1–3 ranking. Live checks confirm Groto appears in the top 10 for only 2 of 10 tested buyer queries — 'UX agency vs in-house designer' (#7) and 'UX design agency India for US startups' (#9) — and both wins are blog posts. Zero commercial or service pages surface for any tested buyer query.",
+   cf:"NeuronUX turns 2,441 keywords into 167 top-3 rankings and 7,387 commercial visits by concentrating authority across only ~140 URLs.",
+   fix:"This is the compound effect of causes 1–4. Consolidation and internal linking are the prerequisites; new pages alone will not fix it."},
+  {r:9,sev:"MEDIUM",t:"Structural on-page defects across the Framer template",
+   ev:"Homepage carries 4 H1 tags (breakpoint duplication). /services hub carries 3. /contact carries ZERO H1. Four title tags exceed 60 characters, up to 91 on /blog/ui-ux-design-agencies-in-india. Blog post documents weigh 3.77–3.87MB of raw HTML each from Framer duplicating markup for responsive breakpoints.",
+   cf:"Thomas Digital's two highest-intent commercial pages have zero true H2 tags — so this class of defect is not unique — but Groto's missing H1 on /contact and 4x-duplicated homepage H1 are more severe.",
+   fix:"Dedupe H1s per breakpoint, add an H1 to /contact, trim titles over 60 characters, fix the single-item breadcrumb schema, audit Framer responsive duplication."},
+  {r:10,sev:"MEDIUM",t:"Buyer-stage content exists but is architecturally demoted",
+   ev:"The Eleken alternatives, Superside alternative, agency-vs-in-house, pricing-guide and audit-cost posts are all real, substantial, well-authored buyer-stage assets published April–July 2026. All of them live under /blog/ rather than as dedicated /compare/ or /pricing/ landing pages, and none links to a commercial page.",
+   cf:"Parallel HQ runs 13 dedicated /[competitor]-alternative landing pages PLUS ~30 paired blog posts. Eleken runs /eleken-vs-toptal, /eleken-vs-in-house-designer, /eleken-vs-traditional-agency as top-level commercial URLs.",
+   fix:"Promote the strongest buyer-stage posts to /compare/* landing pages with comparison tables, FAQ schema and direct CTAs; keep the blog versions as supporting content pointing at them."}
+];
+
+const PAGETYPE_GAP = [
+  {t:"Industry vertical pages", s:"Partial", d:"6 exist. SaaS and AI are genuinely good (1,879w / 1,747w with FAQPage+Audience+OfferCatalog schema). Fintech, healthcare, ecommerce and dev-tools each have a broken legacy stub competing for the same term."},
+  {t:"Use case pages", s:"Missing", d:"No AI dashboard page, no AI agent/copilot page, no onboarding UX page, no design system page, no UX audit page. Every deep competitor has at least three of these. Groto's own homepage title claims the dashboard positioning it has no page for."},
+  {t:"Comparison / alternative pages", s:"Partial", d:"Two exist (Eleken alternatives, Superside alternative) and one already ranks — but both are blog posts, not commercial landing pages, and neither links to anything Groto sells."},
+  {t:"Buyer-stage commercial pages", s:"Partial", d:"/pricing exists with published rates — a real strength. No /hire-a-ux-designer engagement page. No 'how to hire' or 'questions to ask' pillar as a commercial asset."},
+  {t:"Location pages", s:"Present but misdirected", d:"79 pages across two duplicate systems, aimed at cities with no SaaS/AI buyer density, with no LocalBusiness schema. The single largest volume of wasted crawl budget on the site."}
+];
+
+/* ---------- PHASE 9A: BUILD PLAN ---------- */
+const BUILD_P1 = [
+  {t:"AI Dashboard UX Design Agency", u:"/services/ai-dashboard-ux-design", kw:"dashboard ux design agency · ai dashboard design", icp:"AI/SaaS product lead shipping analytics or agent interfaces", si:"Commercial", ref:"eleken.co/blog-posts/dashboard-ux-design-agency", why:"Groto's homepage title literally claims this positioning and has no page for it. Eleken owns the query outright. Live SERP shows only one real agency competing — the rest are AI dashboard generator tools."},
+  {t:"UX Design for AI Agents & Copilots", u:"/services/ai-agent-copilot-ux-design", kw:"ux design for ai agents · ai copilot ux design", icp:"AI-native founder / Head of Product", si:"Commercial", ref:"eleken.co/industries/ui-ux-design-for-ai-based-products · neuronux.com/ai", why:"Zero agencies rank for AI-agent UX. Genuine first-mover lane in the fastest-growing segment of Groto's stated ICP."},
+  {t:"UI/UX Design Company in India for US SaaS Companies", u:"/india-ux-design-for-us-saas", kw:"ui ux design company india for us clients", icp:"US SaaS founder evaluating an offshore partner", si:"Commercial", ref:"lollypop.design/ui-ux-design-agency-in-usa/ · thethunderclap.com listicle", why:"HIGHEST-PRIORITY OPEN LANE. Live SERP top 5 contains a LinkedIn post and three directories. No premium boutique has built this page. It is the single closest query to Groto's actual structural identity."},
+  {t:"UX Design Agency Pricing: What SaaS Teams Actually Pay", u:"/ux-design-agency-pricing", kw:"how much does a ux design agency cost · ux design agency pricing", icp:"Budget holder, late-stage evaluation", si:"Commercial", ref:"eleken.co/pricing · procreator.design", why:"Groto already publishes exact rates and ranks for nothing. SERP is Clutch plus a field of boutique agencies. Highest-intent query in the entire map and a confirmed AI Overview trigger."},
+  {t:"Groto vs In-House Design Team", u:"/compare/groto-vs-in-house-design-team", kw:"ux agency vs in-house designer", icp:"SaaS eng/product lead running a build-vs-buy decision", si:"Commercial", ref:"eleken.co/eleken-vs-in-house-designer", why:"Groto ALREADY RANKS #7 with a blog post. Promoting it to a real comparison page with a table, FAQ schema and a direct CTA is the cheapest ranking upgrade available."},
+  {t:"Eleken Alternatives (promote from blog)", u:"/compare/eleken-alternative", kw:"eleken alternative", icp:"SaaS buyer actively comparing agencies", si:"Commercial", ref:"parallelhq.com — 13 dedicated alternative pages", why:"ALREADY RANKING and already carries a 6-question FAQ block. Eleken does not defend its own alternative query. Add the comparison table and commercial links it currently lacks."},
+  {t:"UX Audit Service", u:"/services/ux-audit", kw:"ux audit service · ui ux audit", icp:"Product lead with a shipped product and a retention problem", si:"Commercial", ref:"eleken.co/ux-audit-service · qubstudio.com", why:"Every deep competitor has one; Groto has none. Seven different boutique agencies rank with a plain service page — the entry bar is structure, not authority. Doubles as the lowest-friction lead magnet in the set."},
+  {t:"SaaS Onboarding UX Design", u:"/services/saas-onboarding-ux-design", kw:"saas onboarding ux design", icp:"SaaS growth / activation owner", si:"Commercial", ref:"eleken.co · lollypop.design", why:"Directly serves the SaaS ICP, high AI-citation potential, and the SERP is blog content with no locked-in brand except Eleken."},
+  {t:"UX Design Agency Austin", u:"/ui-ux-design/austin", kw:"ux design agency austin", icp:"Austin SaaS founder", si:"Commercial + local", ref:"wavespace.agency · designstudiouiux.com/austin", why:"Clearest 'just build the page' win in the location group — 7 of 8 live results are exact-match city pages, no dominant brand. Rebuild Groto's existing thin version properly."},
+  {t:"UX Design Agency — Boston, Chicago, Seattle, SF, NYC (rebuild 5)", u:"/ui-ux-design/[city]", kw:"ux design agency [city]", icp:"US SaaS buyer in a high-density metro", si:"Commercial + local", ref:"neuronux.com/boston · neuronux.com/ny", why:"Seattle ALREADY RANKS with a 6-question FAQ block — that page is the working template. Rebuild the five metros that match SaaS density using it, and retire the other 74."}
+];
+
+const BUILD_P2 = [
+  {t:"Best UX Design Agencies for SaaS 2026 (self-ranking listicle)", u:"/blog/best-ux-design-agencies-for-saas", kw:"best ux design agencies for saas", icp:"Comparison shopper", si:"Commercial", ref:"eleken.co/blog-posts/ux-design-companies-in-usa · superside.com/blog/saas-design-agencies", why:"Upgrade the existing post. SERP is entirely boutique-agency listicles. Every deep competitor self-ranks #1 in its own roundup — Eleken, Superside, Clay and NeuronUX all confirmed doing it."},
+  {t:"Best AI Product Design Agencies 2026", u:"/blog/best-ai-product-design-agencies", kw:"ai product design agency", icp:"AI founder comparing partners", si:"Commercial", ref:"parallelhq.com · clay.global/blog/top-ai-first-design-agencies", why:"Post exists — needs the self-ranking structure, a disclosed methodology, and links into the new AI service pages."},
+  {t:"Designjoy Alternative", u:"/compare/designjoy-alternative", kw:"designjoy alternative", icp:"Buyer priced out of or outgrowing a subscription service", si:"Commercial", ref:"parallelhq.com alternative cluster", why:"Designjoy does not rank for its own alternative query and no boutique UX agency has claimed it. Genuinely open."},
+  {t:"Groto vs Freelance UX Designer", u:"/compare/groto-vs-freelance-designer", kw:"ux design agency vs freelancer", icp:"Early-stage founder deciding on model", si:"Commercial", ref:"eleken.co/eleken-vs-toptal", why:"Seven boutique agencies rank with no dominant brand. Pairs with the in-house comparison as a decision-stage cluster."},
+  {t:"How to Hire a UX Design Agency (pillar)", u:"/guides/how-to-hire-a-ux-design-agency", kw:"how to hire a ux design agency", icp:"First-time agency buyer", si:"Commercial-informational", ref:"ramotion.com · clay.global/blog/top-ux-agencies/hiring-ui-ux-agency", why:"Confirmed PAA and AI Overview trigger. Nine peer-tier boutiques compete; none is untouchable."},
+  {t:"Questions to Ask a UX Design Agency", u:"/guides/questions-to-ask-a-ux-design-agency", kw:"questions to ask a ux design agency", icp:"Buyer in vendor evaluation", si:"Commercial-informational", ref:"eleken.co · bricxlabs.com", why:"Cheapest AI Overview bait in the map — 14 real questions already harvested from live SERPs. Strong internal-link magnet into pricing and hire pages."},
+  {t:"Offshore UX Design Team: How to Vet One", u:"/guides/offshore-ux-design-team", kw:"offshore ux design team · outsource ux design", icp:"US buyer with offshore objections", si:"Commercial-informational", ref:"noundesign.agency · koruux.com", why:"Fragmented SERP of staffing services and BPO blogs. Only one genuine design agency ranks. Directly answers the objection Groto must overcome to close US deals."},
+  {t:"Nearshore vs Offshore Design Teams", u:"/guides/nearshore-vs-offshore-design-teams", kw:"nearshore vs offshore design team", icp:"US buyer comparing delivery models", si:"Commercial-informational", ref:"none — zero design agencies rank", why:"ZERO design agencies appear in this SERP. Entire page 1 is generic software-dev staffing content. First-mover AI-citation opportunity."},
+  {t:"MVP Design Agency", u:"/services/mvp-design", kw:"mvp design agency", icp:"Pre-launch startup founder", si:"Commercial", ref:"eleken.co/engagement/mvp-design-for-saas", why:"Fragmented SERP with one irrelevant exact-match domain diluting page 1. Easy entry, on-strategy for early-stage SaaS."},
+  {t:"Product Redesign Agency", u:"/services/product-redesign", kw:"product redesign agency · saas product redesign", icp:"Company with an existing product and a UX debt problem", si:"Commercial", ref:"eleken.co/engagement/product-redesign", why:"Strong mid-funnel term matching Groto's actual delivery model."},
+  {t:"Design System Service", u:"/services/design-system", kw:"design system agency", icp:"Scaling product team", si:"Commercial", ref:"eleken.co/design-system-service", why:"Standard service-page gap. Supports the SaaS and enterprise narrative even if not a top traffic driver."},
+  {t:"B2B SaaS Design Agency", u:"/industry/b2b-saas-design", kw:"b2b saas design agency", icp:"B2B SaaS product lead", si:"Commercial", ref:"parallelhq.com · ramotion.com/b2b-ui-ux-design", why:"SERP is entirely 'best of' listicles by agencies exactly Groto's size. Open format."},
+  {t:"IVHQ case study (build the missing proof)", u:"/projects/ivhq", kw:"— (proof asset)", icp:"Every ICP page needs it", si:"Trust", ref:"neuronux.com/listrak · clay.global/work/sky", why:"The 2.3x conversion / 1.25x retention figure Groto already claims in its homepage schema has no page behind it. This is the single most valuable missing asset on the site."}
+];
+
+const BUILD_P3 = [
+  {t:"Fintech UX Design (rebuild + de-cannibalise)", u:"/industry/fintech-ux-design", kw:"fintech ux design agency", icp:"Fintech product lead", si:"Commercial", ref:"eleken.co/industries/fintech · clay.global/fintech", why:"Needs a fintech case study with metrics first, or it cannot beat UXDA. Requires the /finance stub redirect to land."},
+  {t:"Healthcare UX Design (rebuild + de-cannibalise)", u:"/industry/healthcare-ux-design", kw:"healthcare ux design agency", icp:"Healthtech product lead", si:"Commercial", ref:"eleken.co/industries/healthcare", why:"Same dependency — needs a healthcare case study with metrics. Requires the /health-care stub redirect."},
+  {t:"UX Design for Developer Tools & API Products", u:"/industry/developer-tools-ux-design", kw:"ux design for developer tools · api product design", icp:"DevTools founder", si:"Commercial", ref:"eleken.co/industries/ui-ux-design-for-developers", why:"Note: 'dev tools UX design' is the WRONG keyword — Google reads it as browser DevTools. Use the API/developer-product phrasing instead."},
+  {t:"Data & Analytics Product Design", u:"/industry/data-product-design", kw:"data product design agency", icp:"Data/analytics SaaS lead", si:"Commercial", ref:"lazarev.agency · qubstudio.com", why:"Adjacent to the AI dashboard positioning; reinforces rather than dilutes it."},
+  {t:"Product & UX Glossary (12–15 terms)", u:"/glossary/[term]", kw:"what is [activation rate / time-to-value / design system / churn]", icp:"Top of funnel", si:"Informational", ref:"neuronux.com/glossary-term/* (11 terms)", why:"NeuronUX proves a deliberately SMALL curated glossary captures definitional long-tail without diluting authority. Do not build hundreds."},
+  {t:"One free tool", u:"/tools/[tool]", kw:"— (link magnet)", icp:"Practitioner → referral", si:"Informational", ref:"thethunderclap.com/webflow-image-optimizer · superside.com/guides/ai-readiness-quiz", why:"Thunderclap runs two owned tools at a fraction of Superside's scale. One well-chosen tool is a durable backlink asset."},
+  {t:"Remaining metro pages (2–3 more)", u:"/ui-ux-design/[city]", kw:"ux design agency [city]", icp:"US SaaS buyer", si:"Commercial + local", ref:"parallelhq.com service × city matrix", why:"Only after the first 6 metros prove the template. Denver, Miami and Raleigh are the next tier by SaaS density."}
+];
+
+/* ---------- PHASE 9B: KEYWORD STRATEGY ---------- */
+const KW_STRATEGY = [
+  {p:"/services/ai-dashboard-ux-design", pk:"dashboard ux design agency", sk:"ai dashboard design · saas dashboard design agency · analytics dashboard ux · data visualisation ux design", lt:"how to design a saas dashboard · ai dashboard design best practices · dashboard information architecture", paa:"Can AI create a dashboard? · What is the 5-second rule for dashboards? · What makes a good SaaS dashboard?", fs:"Yes — definition + numbered principles"},
+  {p:"/services/ai-agent-copilot-ux-design", pk:"ux design for ai agents", sk:"ai copilot ux design · llm interface design · conversational ux for ai products · agentic ux", lt:"how to design an ai copilot · ux patterns for ai agents · designing trust into ai interfaces", paa:"How do you design a UX for an AI agent? · What is agentic UX? · How do you show AI confidence in an interface?", fs:"Yes — definition block, first-mover"},
+  {p:"/india-ux-design-for-us-saas", pk:"ui ux design company india for us clients", sk:"ux design agency india · offshore ux design team · india design agency for us startups", lt:"best indian ux agency for us saas · india ux agency time zone overlap · usd pricing indian design agency", paa:"Where can I find skilled offshore UI/UX designers? · Is nearshore more expensive than offshore? · How do Indian agencies handle US time zones?", fs:"Yes — comparison table"},
+  {p:"/ux-design-agency-pricing", pk:"how much does a ux design agency cost", sk:"ux design agency pricing · ui ux design cost · saas ux design cost · design retainer pricing", lt:"ux design agency cost per month · how much does a saas redesign cost · ux audit cost", paa:"How much does it cost to hire a UI/UX design agency? · What pricing models do UI/UX agencies use? · How long does a typical UX design project take? · What impacts UX design costs?", fs:"Yes — confirmed AI Overview trigger; needs $ ranges + tables + FAQ schema"},
+  {p:"/compare/groto-vs-in-house-design-team", pk:"ux agency vs in-house designer", sk:"design agency vs in-house team · when to hire your first designer · agency vs in-house cost", lt:"is a ux agency cheaper than in-house · at what stage should a startup hire a designer", paa:"Is a UX agency more expensive than hiring in-house? · Who owns the design files? · Can a UX agency learn our product as well as an in-house designer? · At what stage should a startup hire their first in-house designer?", fs:"Yes — comparison table + FAQ"},
+  {p:"/compare/eleken-alternative", pk:"eleken alternative", sk:"eleken vs · eleken competitors · alternatives to eleken", lt:"cheaper alternative to eleken · eleken alternative with project manager", paa:"What is the best Eleken alternative for SaaS product teams? · Is there a cheaper alternative to Eleken? · Which Eleken alternatives include a project manager?", fs:"Yes — already has the FAQ block"},
+  {p:"/services/ux-audit", pk:"ux audit service", sk:"ui ux audit · usability audit service · heuristic evaluation service · saas ux audit", lt:"how much does a ux audit cost · what does a ux audit include · ux audit checklist", paa:"What is a UX audit? · How long does a UX audit take? · What deliverables come with a UX audit?", fs:"Yes — definition + deliverable list"},
+  {p:"/services/saas-onboarding-ux-design", pk:"saas onboarding ux design", sk:"user onboarding design · activation ux design · saas onboarding flow design", lt:"how to improve saas onboarding · saas onboarding best practices · reduce time to value saas", paa:"What is good SaaS onboarding? · How do you measure onboarding success? · What is time-to-value?", fs:"Yes — high AI-citation potential"},
+  {p:"/ui-ux-design/[city]", pk:"ux design agency [city]", sk:"ui ux design agency [city] · product design agency [city] · [city] saas design agency", lt:"best ux agency in [city] for saas · [city] ux design company for startups", paa:"Why hire a UI/UX design agency in [city]? · Do you offer custom UI/UX services in [city]? · Do you work with startups, SaaS and enterprise in [city]?", fs:"No — optimise for local pack + LocalBusiness schema instead"},
+  {p:"/blog/best-ux-design-agencies-for-saas", pk:"best ux design agencies for saas", sk:"top saas ux agencies · saas design agency comparison · best b2b saas design agencies", lt:"best ux design agency for early stage saas · top saas design agencies 2026", paa:"What should I look for in a SaaS UX agency? · How do I compare UX design agencies?", fs:"Yes — with a disclosed scoring methodology"}
+];
+
+/* ---------- PHASE 9C: BRIDGE STRATEGY ---------- */
+const BRIDGE = [
+  {cl:"Agency comparison cluster", posts:"/blog/best-ux-design-agencies-us · /blog/best-ai-product-design-agencies-us · /blog/best-ux-agencies-for-saas-usa · /blog/ui-ux-design-agencies-in-india", tgt:"/india-ux-design-for-us-saas and /services/ai-dashboard-ux-design", anchor:"\"our AI dashboard and agent UX practice\" · \"how we work with US SaaS teams from India\"", place:"Inside Groto's own #1 entry in each listicle, plus a CTA box immediately after the selection-criteria section", impact:"Highest — these posts already rank and already attract comparison-stage buyers. Every one currently dead-ends."},
+  {cl:"Pricing & cost cluster", posts:"/blog/web-design-agency-pricing-guide · /blog/how-much-does-a-ux-audit-cost · /blog/saas-ux-redesign-cost", tgt:"/ux-design-agency-pricing and /services/ux-audit", anchor:"\"see Groto's published monthly rates\" · \"book a fixed-scope UX audit\"", place:"One link in the intro after the first cost range is stated; one CTA box after the cost-factors section; one closing link", impact:"Highest intent in the entire content set. These readers have a budget and are actively comparing."},
+  {cl:"Build-vs-buy cluster", posts:"/blog/ux-agency-vs-in-house-designer (currently ranks #7)", tgt:"/compare/groto-vs-in-house-design-team", anchor:"\"a side-by-side breakdown of Groto versus an in-house hire\"", place:"Intro paragraph and a mid-post CTA box after the cost comparison", impact:"Converts an existing page-1 ranking into a commercial page visit. Cheapest win available."},
+  {cl:"Alternatives cluster", posts:"/blog/eleken-alternatives · /blog/superside-alternative", tgt:"/compare/eleken-alternative · /services/saas-ux-design-...", anchor:"\"how Groto compares on scope, pricing and team model\"", place:"Inside the Groto entry itself and immediately after the comparison table", impact:"Already ranking for eleken alternative. Currently sends that traffic nowhere."},
+  {cl:"SaaS UX education cluster", posts:"/blog/the-complete-guide-to-saas-ux-design · /blog/what-is-ux-strategy-and-how-to-create-it and ~40 SaaS-adjacent posts", tgt:"/industry/saas-industry-ux-design-... · /services/saas-onboarding-ux-design", anchor:"\"our SaaS UX practice\" · \"how we redesign SaaS onboarding\"", place:"One topically matched link per major section, following Eleken's Mechanism B — the link fires at the moment the reader's context matches a Groto service", impact:"Medium-high volume, medium intent. This is the layer that builds internal PageRank into the commercial pages."},
+  {cl:"Generic UX education (~185 posts)", posts:"Definitional and glossary-style posts", tgt:"Nearest relevant service page, one link only", anchor:"Descriptive, service-specific — never \"click here\" or a bare nav label", place:"One contextual link, one closing CTA. Do not over-invest.", impact:"Low individually, meaningful in aggregate. Ramotion's failure was using five identical boilerplate anchors across every post regardless of topic — match the anchor to the topic or skip the link."}
+];
+
+/* ---------- PHASE 9D: CASE STUDY STRATEGY ---------- */
+const CASESTUDIES = [
+  {u:"/projects/camb-ai-dubbing", c:"Camb.ai", i:"AI dubbing", m:"NONE", kw:"ai product design case study · ai localisation ux", tt:"Camb.ai: Designing Real-Time AI Dubbing at Scale | Groto Case Study", add:"Outcome metrics · CTA to /services/ai-agent-copilot-ux-design · CreativeWork + Review schema", link:"AI agent/copilot UX page · AI industry page"},
+  {u:"/projects/pathwaysx-b2b-hiring-platform-design", c:"PathwaysX", i:"AI hiring / HR tech", m:"NONE", kw:"b2b saas platform design case study · hr tech ux design", tt:"PathwaysX: B2B Hiring Platform UX for an AI-Matching Product | Groto", add:"Outcome metrics · CTA · schema", link:"B2B SaaS industry page · SaaS UX service page"},
+  {u:"/projects/designing-a-pr-first-ai-tool-that-thinks-like-a-teammate", c:"Barista", i:"AI / PR tech", m:"NONE", kw:"ai copilot ux case study · ai agent interface design", tt:"Designing an AI Copilot That Works Like a Teammate | Groto Case Study", add:"Outcome metrics · CTA · schema. This is the single best proof asset for the new AI agent page.", link:"AI agent & copilot UX page — primary proof"},
+  {u:"/projects/building-stbl-io-s-investment-app", c:"STBL.io", i:"Fintech", m:"NONE", kw:"fintech app ux design case study", tt:"STBL.io: Investment App UX for a Regulated Fintech Product | Groto", add:"Outcome metrics — this unlocks the fintech industry page rebuild", link:"Fintech industry page (P3 dependency)"},
+  {u:"/projects/reimagining-health-tracking-with-gini", c:"Gini", i:"Healthtech", m:"NONE", kw:"healthcare ux design case study · health tracking app ux", tt:"Gini: Health Tracking UX That Users Actually Sustain | Groto", add:"Outcome metrics — unlocks the healthcare industry page rebuild", link:"Healthcare industry page (P3 dependency)"},
+  {u:"/projects/redesigning-the-creative-engine-behind-indiefolio", c:"IndieFolio", i:"Marketplace", m:"NONE", kw:"marketplace ux redesign case study", tt:"IndieFolio: Redesigning a Two-Sided Creative Marketplace | Groto", add:"Outcome metrics · CTA · schema", link:"Product redesign service page"},
+  {u:"/projects/policybazaar", c:"PolicyBazaar", i:"Insurtech", m:"NONE", kw:"insurtech ux design case study · enterprise scale ux", tt:"PolicyBazaar: UX at Enterprise Insurance Scale | Groto Case Study", add:"Outcome metrics. Strongest brand name in the portfolio — currently doing no work.", link:"Homepage trust block · enterprise narrative"},
+  {u:"/projects/taylor-circus", c:"Taylor & Circus", i:"E-commerce", m:"Problem-stage only (80% mobile)", kw:"ecommerce ux design case study", tt:"Taylor & Circus: Mobile-First Commerce UX | Groto Case Study", add:"Convert the 80% mobile stat into a before/after outcome. Currently states the problem and never resolves it.", link:"Ecommerce industry page"},
+  {u:"/projects/home-guru", c:"HomeGuru", i:"EdTech / real estate", m:"NONE", kw:"marketplace ux case study", tt:"HomeGuru: Simplifying a Complex Discovery Journey | Groto", add:"Outcome metrics · CTA · schema", link:"Product redesign service page"},
+  {u:"/projects/reimagining-meydan", c:"Meydan", i:"Hospitality", m:"Problem-stage only (62% no scroll)", kw:"— low ICP relevance", tt:"Meydan: Rebuilding a Site Nobody Scrolled | Groto Case Study", add:"Resolve the 62% stat with an after-number. Deprioritise otherwise — low ICP fit.", link:"Web design service page"},
+  {u:"/projects/redesign-nicotex-begin-with---ux-strategy", c:"Nicotex", i:"Healthcare / consumer", m:"NONE", kw:"ux strategy case study", tt:"Nicotex: Starting With UX Strategy, Not Screens | Groto", add:"Outcome metrics · fix the malformed URL slug (contains a triple hyphen)", link:"UX strategy service page"},
+  {u:"/projects/designing-for-lower-carbon-footprints-at-scale", c:"Unnamed", i:"Sustainability", m:"NONE", kw:"— low ICP relevance", tt:"—", add:"Name the client or deprioritise. Anonymous case studies carry no trust weight.", link:"None — low priority"},
+  {u:"/projects/designing-ai-powered-learning-that-scales", c:"Unnamed", i:"EdTech / AI", m:"NONE", kw:"ai learning product design case study", tt:"Designing AI-Powered Learning That Scales | Groto Case Study", add:"Name the client. Add outcome metrics. Relevant to the AI positioning.", link:"AI industry page"},
+  {u:"/projects/ivhq  ← DOES NOT EXIST", c:"IVHQ", i:"Marketplace / travel", m:"2.3x conversion rate increase · 1.25x retention improvement", kw:"conversion rate ux case study · marketplace conversion redesign", tt:"IVHQ: A 2.3x Conversion Lift From a UX-Led Redesign | Groto Case Study", add:"BUILD THIS FIRST. Groto's homepage schema already claims these numbers and there is no page behind them. It is the only quantified proof the agency owns.", link:"Homepage · every ICP page · pricing page · all comparison pages"}
+];
+
+/* ---------- PHASE 9E: 90-DAY ROADMAP ---------- */
+const ROADMAP = [
+  {m:"Month 1 — Foundation: stop the bleeding before building anything new", w:"Week 1", theme:"Structural remediation", owner:"Technical / web lead", tasks:[
+    "301-redirect all 20 broken legacy stubs to their live equivalents (/saas-design → /services/saas-ux-design-…, /ai-design → /services/ai-first-ux-design-…, /health-care → /industry/healthcare-…, /finance → /industry/fintech-…, /e-commerce → /industry/ecommerce-…, /web-design → /services/web-design-agency-…, /brand-design → /services/brand-identity-…, /ux-design → /services/ux-strategy-…, and the remaining 12). Expected outcome: six cannibalised commercial concepts consolidate onto one URL each.",
+    "Purge all 20 from sitemap.xml and add <lastmod> to every remaining URL. Expected outcome: Google gains a freshness signal on 383 URLs where it currently has none.",
+    "Add an H1 to /contact. Dedupe the 4 homepage H1s and 3 /services H1s caused by Framer breakpoint duplication. Fix the single-item BreadcrumbList schema. Expected outcome: clean crawl signals on the highest-authority pages.",
+    "Trim the 4 title tags over 60 characters (worst: /blog/ui-ux-design-agencies-in-india at 91). Expected outcome: full titles display in SERP instead of truncating."]},
+  {m:"Month 1 — Foundation: stop the bleeding before building anything new", w:"Week 2", theme:"Build the bridge", owner:"Content lead + web lead", tasks:[
+    "Retrofit the 12 buyer-intent blog posts with 2–4 in-body contextual links each, using the exact anchor text specified in the Bridge Strategy tab. Expected outcome: the first real path from ranking content to commercial pages in the site's history.",
+    "Build one reusable in-content CTA component in Framer, with editable copy per instance. Expected outcome: JTBD-matched CTA blocks become a 2-minute job rather than a custom build.",
+    "Deploy CTA blocks into the pricing cluster and build-vs-buy post first — highest intent, already ranking. Expected outcome: /blog/ux-agency-vs-in-house-designer (#7) starts routing to a commercial page.",
+    "Add FAQPage schema to all 7 service pages and the 4 industry pages missing it. Expected outcome: eligibility for the 676 PAA and 691 AI Overview opportunities already in Groto's tracked set."]},
+  {m:"Month 1 — Foundation: stop the bleeding before building anything new", w:"Week 3", theme:"Build the proof", owner:"Founder / delivery lead + content lead", tasks:[
+    "Write and ship the IVHQ case study at /projects/ivhq with the 2.3x conversion and 1.25x retention figures. Expected outcome: Groto's homepage claim becomes verifiable instead of unsupported.",
+    "Retrofit outcome metrics onto the 5 highest-ICP-relevance case studies (Camb.ai, PathwaysX, Barista, STBL.io, IndieFolio). Where a hard number does not exist, get it from the client or state a defensible qualitative outcome — but stop shipping case studies that end without a result.",
+    "Add Review + AggregateRating schema sitewide reflecting the real Clutch rating. Expected outcome: star-rating rich-result eligibility on branded and near-branded queries.",
+    "Cross-link: every service page links to 2 relevant case studies; every case study links back to the service that produced it. Expected outcome: closes the loop that is currently broken in both directions."]},
+  {m:"Month 1 — Foundation: stop the bleeding before building anything new", w:"Week 4", theme:"Location consolidation", owner:"Technical / web lead", tasks:[
+    "Pick 6 metros by SaaS/AI buyer density: San Francisco, New York, Austin, Seattle, Boston, Chicago. Expected outcome: a defensible location set instead of 79 arbitrary cities.",
+    "Rebuild those 6 using the /ui-ux-design/seattle page as the template — it already ranks and already carries a 6-question FAQ block. Add distinct local copy, a locally relevant case study per page and LocalBusiness schema. Expected outcome: 6 pages that can actually compete rather than 79 that cannot.",
+    "301 or noindex the remaining 73 location URLs and retire the duplicate /web-design/[city] system entirely. Expected outcome: crawl budget and topical authority redirect to pages that matter.",
+    "Normalise the two competing title formulas into one. Expected outcome: consistent SERP presentation across the surviving set."]},
+
+  {m:"Month 2 — Build: the pages that capture buyers", w:"Week 5", theme:"AI positioning pages", owner:"Content lead + design", tasks:[
+    "Ship /services/ai-dashboard-ux-design (target: dashboard ux design agency). Source material: the homepage FAQ answers already written on this topic. Expected outcome: Groto finally has a page for the positioning in its own homepage title tag.",
+    "Ship /services/ai-agent-copilot-ux-design (target: ux design for ai agents). Lead with the Barista case study. Expected outcome: first-mover position in a lane where zero agencies currently rank.",
+    "Both pages: FAQPage + Service schema, 2,200+ words, 2 case studies each, exact-match CTA, links to /pricing and the AI industry page.",
+    "Add a topically matched link from every AI-adjacent blog post to the relevant new page."]},
+  {m:"Month 2 — Build: the pages that capture buyers", w:"Week 6", theme:"The India-for-US wedge", owner:"Founder + content lead", tasks:[
+    "Ship /india-ux-design-for-us-saas (target: ui ux design company india for us clients). Lead with time-zone overlap, USD pricing, named US clients and the IVHQ metric. Expected outcome: claim the highest-priority open lane in the entire keyword map — a SERP currently held by a LinkedIn post and three directories.",
+    "Ship /guides/offshore-ux-design-team and /guides/nearshore-vs-offshore-design-teams. Expected outcome: Groto becomes the only design-specific source answering a question currently answered only by software-dev staffing blogs.",
+    "Link all three to each other and to /pricing. Add FAQPage schema using the harvested PAA questions verbatim.",
+    "Reference: study lollypop.design/ui-ux-design-agency-in-usa/ — the strongest India-to-US page in the benchmark — then beat it on proof and schema."]},
+  {m:"Month 2 — Build: the pages that capture buyers", w:"Week 7", theme:"Pricing and comparison pages", owner:"Content lead", tasks:[
+    "Ship /ux-design-agency-pricing as a real commercial page (not a blog post) with tier tables, cost-driver breakdown, engagement models and FAQ schema built from the 8 harvested pricing PAA questions. Expected outcome: Groto's existing published rates finally become findable.",
+    "Promote /blog/ux-agency-vs-in-house-designer to /compare/groto-vs-in-house-design-team with a side-by-side table; keep the blog post and point it at the new page. Expected outcome: converts a page-1 ranking into a commercial page visit.",
+    "Promote /blog/eleken-alternatives to /compare/eleken-alternative with a comparison table and direct CTAs. Expected outcome: same conversion on an already-ranking asset.",
+    "Ship /compare/groto-vs-freelance-designer and /compare/designjoy-alternative. Expected outcome: a real comparison cluster — the page type Parallel HQ runs 13 of and Groto currently runs zero of."]},
+  {m:"Month 2 — Build: the pages that capture buyers", w:"Week 8", theme:"Service-page depth", owner:"Content lead + design", tasks:[
+    "Ship /services/ux-audit — every deep competitor has one, Groto has none, and it doubles as the lowest-friction lead magnet available. Expected outcome: a bottom-funnel offer that converts audit-stage traffic.",
+    "Ship /services/saas-onboarding-ux-design. Expected outcome: high AI-citation-potential page serving the core SaaS ICP.",
+    "Expand the 7 existing service pages from ~1,500 words toward 2,200+ with an FAQ section, 2 linked case studies and a client logo block. Expected outcome: parity with Ramotion (3,516 words on its SaaS page) and Thomas Digital (2,424 on its).",
+    "Segment the trust signals: SaaS logos on SaaS pages, AI logos on AI pages. Do not recycle one logo wall everywhere — that is Clay's mistake."]},
+
+  {m:"Month 3 — Scale: compound the system", w:"Week 9", theme:"Self-ranking listicles", owner:"Content lead", tasks:[
+    "Rebuild /blog/best-ux-design-agencies-for-saas-usa as a self-ranking listicle with a disclosed scoring methodology, Groto at #1 with an honest entry, 8–15 real competitors below. Expected outcome: adopt the mechanism confirmed in use at Eleken, Superside, Clay and NeuronUX simultaneously.",
+    "Same treatment for /blog/best-ai-product-design-agencies-us. Expected outcome: own the comparison SERP for Groto's own category.",
+    "Both: link from Groto's own entry directly to the relevant new service page. This is the single highest-leverage internal link on the site.",
+    "Ship /guides/how-to-hire-a-ux-design-agency and /guides/questions-to-ask-a-ux-design-agency using the 31 harvested PAA questions."]},
+  {m:"Month 3 — Scale: compound the system", w:"Week 10", theme:"Remaining service and industry pages", owner:"Content lead", tasks:[
+    "Ship /services/mvp-design, /services/product-redesign, /services/design-system. Expected outcome: complete the service-page grid competitors have and Groto lacks.",
+    "Ship /industry/b2b-saas-design. Expected outcome: capture a SERP made entirely of boutique-agency listicles.",
+    "Retrofit outcome metrics onto the remaining 7 case studies. Expected outcome: 13 of 13 case studies carry a result — the differentiator no competitor in the set has fully achieved.",
+    "Audit every new page against the pre-publish checklist (see the Playbook tab)."]},
+  {m:"Month 3 — Scale: compound the system", w:"Week 11", theme:"AI Overview and snippet capture", owner:"Content lead", tasks:[
+    "Restructure the top 20 traffic-earning blog posts to answer-first format: a direct one-sentence answer immediately under each question-phrased H2. This is the mechanism behind Superside's 123 featured snippets and it requires no schema.",
+    "Add a TL;DR capsule immediately after the H1 on the 20 highest-value posts — the structure Eleken uses on every post that wins a snippet.",
+    "Populate dateModified on every page touched in the last 90 days and surface 'Updated [date]' visibly on buyer-stage posts.",
+    "Build a small 12–15 term glossary at /glossary/[term], following NeuronUX's deliberately small curated model. Do not build hundreds."]},
+  {m:"Month 3 — Scale: compound the system", w:"Week 12", theme:"Measure, refresh, decide", owner:"Founder + content lead", tasks:[
+    "Re-run the Semrush domain_rank pull for letsgroto.com and compare against the Day 0 baseline in this dashboard: commercial traffic (63), traffic per keyword (0.27), top-3 rankings (1), traffic value ($500). Expected outcome: a defensible read on whether the system is working.",
+    "Check live SERP positions for the 10 buyer queries in the Live SERP tab. Expected outcome: measure movement from the current 2-of-10 baseline.",
+    "Establish the refresh rule going forward: anything touching 'hire', 'cost', 'pricing', 'agency', 'vs' or 'alternative' gets refreshed quarterly. Pure definitional content can age. This is Eleken's confirmed refresh discipline.",
+    "Decide the next 90 days from data: if the location template is working, extend to Denver/Miami/Raleigh; if the comparison cluster is working, extend to more named competitors; if neither, the constraint is authority, not architecture — shift budget to digital PR and link acquisition."]}
+];
+
+/* ---------- LIVE SERP CHECK ---------- */
+const SERP = [
+  {q:"best UX design agency for SaaS", g:"Not in top 10", who:"superside.com · uxplanet.org · rno1.global · taqwah.agency · fuselabcreative.com · wavespace.agency · cieden.com"},
+  {q:"UX design agency for AI companies", g:"Not in top 10", who:"uxplanet.org · lazarev.agency · superside.com · punchcut.com · wavespace.agency · uxstudioteam.com"},
+  {q:"UI UX design agency pricing", g:"Not in top 10", who:"clutch.co · aalpha.net · fuselabcreative.com · moken.digital · metabole.studio · foundey.com"},
+  {q:"how to hire a UX design agency", g:"Not in top 10", who:"dribbble.com · arounda.agency · clutch.co · ramotion.com · eleken.co · clay.global · cieden.com"},
+  {q:"UX agency vs in-house designer", g:"RANKS #7 (blog post)", who:"procreator.design · invespcro.com · thinkcompany.com · fuselabcreative.com · thedesignership.com · 925studios.co"},
+  {q:"SaaS UX design agency", g:"Not in top 10", who:"eleken.co · brixagency.com · phenomenonstudio.com · stan.vision · fuselabcreative.com"},
+  {q:"AI product design agency", g:"Not in top 10", who:"parallelhq.com · superside.com · punchcut.com · thegradient.com · cieden.com · glow.team"},
+  {q:"UX design agency India for US startups", g:"RANKS #9 (blog post)", who:"procreator.design · aufaitux.com · ungrammary.com · designrush.com · sparklin.com · lollypop.design · thethunderclap.com · onething.design"},
+  {q:"best UX design agencies 2026", g:"Not in top 10", who:"awesomic.com · onething.design · uxstudioteam.com · wavespace.agency · qubstudio.com · clay.global · neuronux.com"},
+  {q:"dashboard UX design agency", g:"Not in top 10 — despite Groto's homepage title claiming this exact positioning", who:"eleken.co (owns it) · lazarev.agency · fivecube.agency · browserlondon.com · excited.agency · stan.vision"}
+];
+
+/* ---------- OPEN LANES ---------- */
+const OPEN_LANES = [
+  {q:"UI UX design company India for US clients", ev:"Top 5 contains a LinkedIn Pulse post and three directories (Clutch, DesignRush, outsourcefromindia.com). Only one thin listicle from thethunderclap.com. No premium boutique has built this page.", v:"HIGHEST PRIORITY"},
+  {q:"nearshore vs offshore design team", ev:"ZERO design agencies rank. Entire page 1 is generic software-development staffing content (coderslink, aezion, riwers, ideaware, arnia).", v:"First-mover"},
+  {q:"outsource UX design", ev:"Only one genuine design agency (koruux.com) appears. Rest is generalist dev/BPO outsourcing content, off-target for design.", v:"First-mover"},
+  {q:"offshore UX design team", ev:"Fragmented staffing-service and vetting-guide content. No dominant brand.", v:"Open"},
+  {q:"Designjoy alternative", ev:"Designjoy does not rank for its own alternative query. No boutique UX agency has claimed it. Field is small content sites (slashdot, hatchwise, zyner, magier).", v:"Open"},
+  {q:"AI dashboard design", ev:"Eleken is the only agency-relevant result. The rest of page 1 is AI dashboard generator tools (Figma, Mokkup, Databricks, uxpilot).", v:"Open — build as guide + service page"},
+  {q:"ux design for AI agents / copilots", ev:"No agency owns this. Adjacent 'UX design for AI products' returns Stanford, Coursera, Medium and UX Collective — zero agencies.", v:"First-mover in Groto's core ICP"},
+  {q:"UX design agency Austin", ev:"7 of 8 results are exact-match city pages from agencies with no dominant brand. Pure 'who built the page' contest.", v:"Build the page"},
+  {q:"UX design agency Chicago", ev:"3 of 8 results are directories (Clutch, DesignRush, DigitalAgencyNetwork). One local specialist to beat.", v:"Directory-dominated = winnable"}
+];
+
+/* ---------- COMPETITOR PROFILES ---------- */
+const PROFILES = [
+  {n:"Thomas Digital", d:"thomasdigital.com", tier:"deep", role:"The commercial-traffic exemplar — 87% of its traffic is commercial intent, the highest ratio in the set.",
+   play:"55 industry vertical pages built as programmatic batches (18 share one lastmod timestamp), plus a 4,724-word AI/GEO pillar shipped with 4 spoke pages on a single day. One disciplined CTA phrase — 'Free Mockup' — repeated 3–6 times on every page sitewide.",
+   steal:["Ship a pillar + 3–4 spokes as ONE coordinated sprint, not drip-fed","Write industry pages with a POV and a named client, not a gallery of screenshots","Use one CTA phrase verbatim across the entire site","Standardise a reusable trust + convert internal-link module injected on every content page"],
+   avoid:["Duplicate meta descriptions across pages","Zero H2 tags on the two highest-intent commercial pages","Case studies excluded from the sitemap","Three different review counts (70+ / 50+ / 142) on the same site","A retired city-page program still leaking 1,147 local-pack keywords"],
+   metric:"0 of 11 case studies carry an outcome metric — the same failure as Groto, at a competitor that still converts 87% commercial traffic."},
+  {n:"NeuronUX", d:"neuronux.com", tier:"deep", role:"The efficiency champion — 4.41 traffic per keyword and 7,387 commercial visits from only 2,441 keywords across just 140 URLs.",
+   play:"A deliberately small site. 4 city pages backed by 4 real staffed offices with distinct NAP, distinct local case studies and named local sub-areas. Self-authored 'Top UX/UI Agencies in [city]' listicles that rank Neuron #1 and appear on page 1 alongside Clutch. Answer-first definitional content.",
+   steal:["Keep the site small — 140 URLs concentrates authority where 1,320 dilutes it","Self-authored city listicles that rank you #1 alongside the directories","Answer-first structure: one-sentence definition under the H1, restated at the top of the first H2, followed by a comparison table","A curated 11-term glossary, not hundreds of thin programmatic pages","4-tier budget qualifier on the contact form to pre-qualify by spend"],
+   avoid:["No LocalBusiness schema on the city pages themselves (only on the homepage) — Groto can beat this directly","Zero JSON-LD on case study pages","No pricing content at all — a query they cede entirely"],
+   metric:"4 of 11 case studies carry hard numbers: GOSTAR 67% faster, Listrak 118→16 nav items, Flo 33M→43M users, Realbricks 40% MoM growth."},
+  {n:"Clay", d:"clay.global", tier:"deep", role:"The premium positioning analogue — 69% commercial traffic on only 35 top-3 rankings, meaning they win high-value terms rather than volume.",
+   play:"Wins the hiring-decision query set (how to hire, cost, agency vs in-house, top-X listicles) rather than industry head terms. 9 URL-folder content clusters with a pillar at each root. Aggressive refresh: all four commercial listicle pillars share a single same-day updatedAt sweep.",
+   steal:["Signal premium without a rate card: engagement models, timeline-as-scope, 'senior-led teams', enterprise logo wall as implicit price anchor","Push dollar ranges into top-of-funnel blog content, keep service pages aspirational","Same-day mass refresh sweep on your highest-value commercial listicles","Self-ranking listicle with a disclosed scoring methodology (their AI-first agencies post scores Clay 23/25)"],
+   avoid:["Recycling one 46-logo wall across every page instead of segmenting proof by ICP","Zero JSON-LD on blog articles despite on-page FAQ sections","Duplicate title and meta across 5 landing pages","No city pages despite 6 offices and 1,398 local-pack keywords"],
+   metric:"Only 1 of 4 sampled case studies (Sky: 40% traffic, 30% engagement, 35% CSAT, 25% conversion) carries numbers."},
+  {n:"Eleken", d:"eleken.co", tier:"deep", role:"The direct positioning competitor — explicitly 'UI/UX design agency for SaaS', running the same informational-heavy model as Groto but converting 71x the commercial traffic.",
+   play:"83% of the site is informational (535 blog posts), yet it converts — because of a four-part bridge mechanism. Post-intro CTA box, topically-matched mid-article service links that fire when the reader's context matches a vertical, MULTIPLE micro-CTA boxes per long post each worded to the section above it, and a closing CTA. Plus self-ranking listicles including 9 geo variants.",
+   steal:["THE BRIDGE: 2–3 CTA boxes per long post, each worded to the section immediately above it ('Let us find the UX gaps hurting your product's performance → Start your audit')","Topical inline linking — link at the moment the reader's context matches a service, not from a boilerplate footer set","Geo-listicles as blog posts rather than thin landing pages (9 cities)","Publish flat numeric pricing ($4,599 / $6,599 / $11,999)","Named competitor pages: /eleken-vs-toptal, /eleken-vs-in-house-designer, /eleken-vs-traditional-agency","Refresh by commercial proximity, not age — 'hire/cost/agency/vs' quarterly, definitional content can rot","FAQPage schema on every service and industry page","Lock positioning at three levels: homepage title, G2 product name, and every H1/H2 repeating 'for SaaS'"],
+   avoid:["Pre-2024 posts have no CTA infrastructure at all — a limitation Groto can outperform by building it from day one","Case studies carry zero schema and inconsistent metrics"],
+   metric:"NWORX +200% positive responses · MyInterview -90% drop-offs · Aampe redesign supported an $18M raise — used as headline proof across service pages."},
+  {n:"Superside", d:"superside.com", tier:"deep", role:"The scale ceiling — 41,774 traffic, $204,737 monthly traffic value. The model for what a fully built system looks like, and a warning about what not to imitate.",
+   play:"A two-layer system, deliberately NOT a combinatorial URL matrix: ~24 hand-built service pages owning commercial head terms, plus a 70-post 'best [X] agencies' listicle layer crossing industry × service × location as blog content, each linking 10–25 exact-match anchors back into the service layer.",
+   steal:["Author your own 'best agency' listicles and self-rank #1 — they do it for every category they want to be found in","The compare-page template: side-by-side table → 5 reasons → how it works → FAQ","Publish transparent pricing ($30K/mo Dedicated, $15K/mo Flex)","Win snippets through question-phrased H2s answered in the first sentence — they use NO FAQPage schema at all and still hold 123 featured snippets","Metric-forward 600–1,200 word case studies, with stats reused as fragments sitewide","Exact-match anchor text discipline, 10+ links per content piece"],
+   avoid:["The 856-post blog and 44-page glossary — content is nearly free at their funding level, not at Groto's","70 listicles at full breadth including 11 city variants — pick 3–5","A commissioned Forrester TEI study","A 7,000-word enterprise page built for procurement security review","Self-declaring local presence while remote-first — a credibility risk Groto specifically should not take"],
+   metric:"Goettl 87% design time saved, 215 images · Salesloft 4 ads in 2 weeks, 0 revisions · Amazon 1,092 assets, 345 hours saved."},
+  {n:"Ramotion", d:"ramotion.com", tier:"deep", role:"THE CAUTIONARY TALE — 23,446 keywords producing only 1,422 commercial visits. Groto is on the identical trajectory at 4% of the scale.",
+   play:"1,320 URLs of which 74% is blog and 10% is speculative non-client portfolio work. Commercial pages are genuinely good (real enterprise logos, named VP testimonials, disclosed pricing) but are a rounding error inside a site whose authority is spent on content that cannot convert.",
+   steal:["The vertical service-page architecture: /saas-ui-ux-design, /b2b-ui-ux-design, /startup-ui-ux-design at 3,000–4,500 words each","Disclose pricing ($50K minimum, $150–199/hr) — it filters unqualified leads and signals confidence","Own your own '[brand] alternative' query before a third party does"],
+   avoid:["Chasing keyword count over commercial density — 23,446 keywords, 6% commercial traffic share","Definitional and career content ('how to become a UX designer', 'angular vs react') that recruits job-seekers and developers, not buyers","A newsletter signup as the only in-content CTA across every post","Five identical boilerplate anchors reused on every post regardless of topic","FAQ sections and named testimonials on every commercial page with zero FAQPage or Review schema"],
+   metric:"Flatfile $50M secured, 1.75M users onboarded · Descript 6M+ creators — but these are client-scale vanity stats, not design-attributable outcomes. Borea AI has none at all."},
+  {n:"Parallel HQ", d:"parallelhq.com", tier:"bench", role:"The programmatic local-service champion — 1,633 commercial visits from only 6,363 keywords, a 20% commercial share on a modest base.",
+   play:"Six core service types cloned across ~21 US metros (SF, NYC, Austin, Boston, Chicago, Denver, Dallas, Miami, Seattle, Portland, Raleigh, Salt Lake City, San Jose, DC…) = ~150 hyper-local commercial pages. Plus 13 dedicated /[competitor]-alternative pages (IDEO, R/GA, Huge, frog, ustwo, Ramotion, MetaLab, Instrument, Neuron, Clay, Work&Co, Method, Code and Theory) with ~30 paired blog posts.",
+   steal:["The service × city matrix — this is the single strongest commercial-efficiency lever in the whole benchmark","13 named-competitor alternative pages as a systematic cluster, each with a paired blog post","Organization schema with AggregateRating 4.8/5 and 9 nested named Review objects","Named client outcomes on the service page itself: 65% activation increase, 40% time-to-value reduction"],
+   avoid:["No dedicated pricing page despite publishing pricing-benchmark blog content","Some H1s render client-side and are absent from static HTML"],
+   metric:"Puts outcome numbers on the service page, not just the case study — 65% activation, 40% time-to-value."},
+  {n:"ManyPixels", d:"manypixels.co", tier:"bench", role:"The volume trap — 17,684 keywords, 13,058 traffic, only 1,400 commercial. A 774-post blog of DIY-adjacent roundups.",
+   play:"'10 Best Logo Makers', '12 Best Digital Art Software', '25 AI Logo Prompts' — high-volume, low-purchase-intent content serving DIY searchers. Confirmed: no live free tools despite the resources positioning (/logo-maker, /tools, /free-tools all 404).",
+   steal:["The 8-page /compare/ set intercepting branded competitor searches","Published tiered pricing ($559–$2,599/mo across 4 tiers × 3 billing cycles)"],
+   avoid:["Roundup content serving DIY intent — it captures keywords and converts nothing (10.7% commercial share)","Claiming a tools/resources strategy without owning any tools"],
+   metric:"19,000+ web pages designed since 2018 · 150,000+ projects delivered — scale claims, not outcomes."},
+  {n:"Lollypop", d:"lollypop.design", tier:"bench", role:"The India-based peer that gets geo-targeting right — highest traffic value in the set ($129,637) but the LOWEST commercial share (3.4%).",
+   play:"421-post blog on WordPress with the richest schema stack in the benchmark (Organization/ProfessionalService, WebSite, WebPage, BreadcrumbList, Service, VideoObject ×2, ImageObject, CreativeWork, Review ×6, FAQPage in one @graph). Geo+language page pairs for USA, UAE (+Arabic), Japan (+JP), Vietnam (+VIE), India. Gated whitepapers and a 'Designathon' community event program as PR/backlink plays.",
+   steal:["/ui-ux-design-agency-in-usa/ is the closest working analogue to what Groto needs: named enterprise logos (Intel, Cisco, Stanford), 180+ designers, 50+ awards, a 6–10 week delivery promise, all on one page","The full schema @graph — this is the standard to match","Gated whitepapers as a mid-funnel capture layer"],
+   avoid:["Spending all that content authority on broad informational and PR content rather than bottom-funnel capture — 369 commercial visits against 10,182 informational","Zero comparison or alternative pages despite the largest content output of any India-based peer","Blank H1 tags in static HTML on several commercial pages","'Custom pricing based on project scope' in the schema priceRange — a weaker trust signal than a number"],
+   metric:"Trusted by Intel, Cisco, Stanford · 150+ brands · 50+ global awards — brand proof, not outcome proof."},
+  {n:"DesignStudioUIUX", d:"designstudiouiux.com", tier:"bench", role:"The India-based peer failing in the same way as Groto — 3,896 keywords, 1,505 traffic, $4,000 value, 0.39 traffic per keyword.",
+   play:"~25 near-identical templated service pages including THREE separate 'enterprise' variants (enterprise-website-design, enterprise-ux-design-services, enterprise-ui-ux-design) — classic cannibalisation splitting authority across pages chasing one intent. Partial, unfinished location coverage: 5 US cities against Parallel HQ's 21.",
+   steal:["/usa/ hub linking to city sub-pages is the right instinct","FAQ schema with a price range embedded ($5,000–$50,000)","Clutch and Trustpilot rating badges on service pages"],
+   avoid:["THE CANNIBALISATION PATTERN — this is Groto's exact defect at a peer, with three enterprise pages competing for one intent","Generic templated service pages with no differentiation","Hedged FAQ price ranges instead of committed figures","Half-built location programs"],
+   metric:"Clutch 4.9 / Trustpilot 4.8 ratings — no client outcome metrics found."},
+  {n:"Designjoy", d:"designjoy.co", tier:"bench", role:"The extreme opposite — 2 URLs total, 201 keywords, 1,467 traffic, 43 top-3 rankings. The best keyword precision in the entire set (21.4% top-3 hit rate).",
+   play:"One page. No blog, no case studies, no service pages. Kevin O'Leary / Shark Tank endorsement, 'Fintech Product of the Year', named client logos, $4,995/mo stated plainly, and a 75%-back guarantee within a week.",
+   steal:["Press and celebrity authority can substitute for an entire content architecture","One unambiguous offer with a risk-reversal guarantee","A single decisive price, prominently displayed"],
+   avoid:["The model caps total addressable traffic at a low ceiling (1,467 vs Superside's 41,774) and depends on press Groto does not have","Zero JSON-LD schema anywhere","Doesn't even rank for its own 'Designjoy alternative' query — which is why that lane is open"],
+   metric:"$4,995/mo, pause or cancel anytime, 75% back within a week."},
+  {n:"Thunderclap", d:"thethunderclap.com", tier:"bench", role:"The vertical specialist — smallest deep-commercial footprint in the set but the HIGHEST commercial traffic share at 61.7%.",
+   play:"A tight service × industry grid rather than service × city: 7 Webflow-specific service pages crossed with 6 industry verticals (saas, fintech, ai, vc, b2b, hr-tech). Two owned free tools (/webflow-image-optimizer, /gsap-resources) and 4 gated lead-magnet guides.",
+   steal:["Tight ICP-vertical targeting beats broad horizontal service pages for conversion — proven at the smallest scale in the set","A two-tier conversion path: a free Website Audit CTA alongside the primary contact CTA","Owned free tools as durable link assets, achievable at boutique scale","They run the only dedicated 'Top 5 India for US clients' listicle — and it's thin, which is why that lane is open for Groto"],
+   avoid:["No indexable individual case-study URLs at all — /work is a single hub with no crawlable sub-pages","JSON-LD syntax errors (lowercase 'person', 'postalAddress' types) that likely fail strict validation"],
+   metric:"'Trusted by 100 Brands' — no outcome metrics found."}
+];
+
+/* ---------- PRE-PUBLISH CHECKLIST ---------- */
+const CHECKLIST = [
+  {c:"Unique title tag under 60 characters, primary keyword front-loaded", src:"Groto has 4 titles over 60 chars, worst at 91"},
+  {c:"Unique meta description with benefit + risk-reversal + CTA verb", src:"Eleken's formula: [what we do] + [for SaaS] + [risk reversal] + [CTA verb]. Clay ships identical meta across 5 landing pages — don't."},
+  {c:"Exactly one H1, real H2 hierarchy, no skipped levels", src:"Groto: 4 H1s on homepage, 0 on /contact. Thomas Digital: 0 H2s on its two top commercial pages."},
+  {c:"Answer-first: one-sentence direct answer under each question-phrased H2", src:"Superside holds 123 featured snippets with NO FAQPage schema — purely from this structure."},
+  {c:"FAQPage schema, questions taken from real observed PAA", src:"Missing on all 7 Groto service pages and 4 of 6 industry pages."},
+  {c:"Service schema on service pages, LocalBusiness on location pages", src:"NeuronUX omits LocalBusiness on its city pages — a gap Groto can beat directly."},
+  {c:"Review + AggregateRating reflecting the real Clutch rating", src:"Groto claims 4.9 on-page and never encodes it. Parallel HQ ships 9 nested Review objects."},
+  {c:"2+ linked case studies, segmented to the page's ICP", src:"Don't recycle one logo wall everywhere — that is Clay's mistake."},
+  {c:"At least one quantified outcome metric visible", src:"0 of 13 Groto case studies have one. This is the differentiator no competitor has fully achieved."},
+  {c:"2–4 in-body contextual internal links with descriptive anchor text", src:"12 of 12 Groto buyer posts have zero. Ramotion's failure was 5 identical boilerplate anchors — match the anchor to the topic."},
+  {c:"One JTBD-matched in-content CTA block per major section", src:"Eleken's Mechanism B — the copy references the exact problem just discussed."},
+  {c:"dateModified populated, lastmod in sitemap, 'Updated [date]' visible", src:"Groto has none of these on 383 URLs."},
+  {c:"Named author with title and a linked bio page", src:"Groto already does this well — a genuine strength to preserve."},
+  {c:"No competing URL targets the same primary keyword", src:"Groto has /saas, /industry/saas-… and /services/saas-ux-design-… all live for one concept."}
+];
+</script>
+<script>
+/* ============ RENDER LAYER ============ */
+const $ = s => document.querySelector(s);
+const esc = s => String(s == null ? "" : s)
+  .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+const nf = n => typeof n === "number" ? n.toLocaleString("en-US") : n;
+// allow <code>, <strong>, <em> written into data strings
+const rich = s => esc(s)
+  .replace(/&lt;(\/?)(code|strong|em|br)&gt;/g,"<$1$2>");
+
+/* ---------- NAV ---------- */
+const TABS = [
+  ["overview","Overview",""],
+  ["baseline","Competitive baseline","DATA"],
+  ["arch","Groto architecture","P1–2"],
+  ["compare","Competitors vs Groto","P7"],
+  ["root","Root cause","P8"],
+  ["bridge","The bridge","P9C"],
+  ["build","Build plan &amp; keywords","P9A–B"],
+  ["cases","Case studies","P9D"],
+  ["serp","Live SERP &amp; open lanes","P6"],
+  ["profiles","Competitor profiles","P2–6"],
+  ["roadmap","90-day roadmap","P9E"]
+];
+$("#nav").innerHTML = TABS.map(([id,label,num],i)=>
+  `<button class="tab${i===0?" on":""}" data-t="${id}">${num?`<span class="num">${num}</span>`:""}${label}</button>`
+).join("");
+document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll(".tab").forEach(x=>x.classList.remove("on"));
+  document.querySelectorAll(".pane").forEach(x=>x.classList.remove("on"));
+  b.classList.add("on");
+  $("#p-"+b.dataset.t).classList.add("on");
+  window.scrollTo({top:0,behavior:"smooth"});
+});
+
+/* ---------- SORTABLE TABLE ---------- */
+function buildTable(sel, cols, rows, opts){
+  opts = opts || {};
+  const el = $(sel); if(!el) return;
+  let dir = {}, sortKey = null;
+  function paint(){
+    let data = rows.slice();
+    if(sortKey!==null){
+      const c = cols[sortKey];
+      data.sort((a,b)=>{
+        let x=c.sort?c.sort(a):c.get(a), y=c.sort?c.sort(b):c.get(b);
+        if(typeof x==="string") x=x.toLowerCase();
+        if(typeof y==="string") y=y.toLowerCase();
+        return (x<y?-1:x>y?1:0)*(dir[sortKey]?1:-1);
+      });
+    }
+    el.innerHTML =
+      "<thead><tr>"+cols.map((c,i)=>
+        `<th class="${c.num?"num":""}" data-i="${i}" style="cursor:pointer;${c.w?`min-width:${c.w}`:""}">${c.h}${sortKey===i?(dir[i]?" ▲":" ▼"):""}</th>`
+      ).join("")+"</tr></thead><tbody>"+
+      data.map(r=>{
+        const cls = opts.rowClass ? opts.rowClass(r) : "";
+        return `<tr class="${cls}">`+cols.map(c=>
+          `<td class="${c.num?"num":""}">${c.cell?c.cell(r):rich(c.get(r))}</td>`
+        ).join("")+"</tr>";
+      }).join("")+"</tbody>";
+    el.querySelectorAll("th").forEach(th=>th.onclick=()=>{
+      const i=+th.dataset.i; dir[i]= sortKey===i ? !dir[i] : true; sortKey=i; paint();
+    });
+  }
+  paint();
+}
+
+/* ---------- CHARTS ---------- */
+function chart(title, subtitle, items, fmt){
+  const max = Math.max(...items.map(i=>i.v));
+  return `<div class="chart"><div class="ct">${title}</div><div class="cs">${subtitle}</div>`+
+    items.map(i=>{
+      const me = i.n === "GROTO";
+      const w = Math.max((i.v/max)*100, i.v>0?1.2:0);
+      return `<div class="bar${me?" me":""}"><div class="bn">${esc(i.n)}</div>`+
+        `<div class="bt"><div class="bf" style="width:${w}%"></div></div>`+
+        `<div class="bv">${fmt(i.v)}</div></div>`;
+    }).join("")+`</div>`;
+}
+const byDesc = k => BASELINE.map(d=>({n:d.n,v:k(d)})).sort((a,b)=>b.v-a.v);
+$("#charts").innerHTML =
+  chart("Commercial-intent traffic per 1,000 keywords",
+        "The diagnostic metric: how efficiently each domain converts rankings into buyer traffic, independent of size. Groto and Ramotion are the same failure mode at different scales.",
+        byDesc(d=>Math.round(d.ct/d.kw*1000)), v=>nf(v)) +
+  chart("Monthly commercial-intent traffic",
+        "Absolute buyer-intent visits from US organic search.",
+        byDesc(d=>d.ct), v=>nf(v)) +
+  chart("Traffic per keyword",
+        "Ranking depth. Groto is last of thirteen — it ranks broadly and shallowly, at positions that generate no clicks.",
+        byDesc(d=>+(d.tr/d.kw).toFixed(2)), v=>v.toFixed(2)) +
+  chart("Keywords in positions 1–3",
+        "Groto holds exactly one top-3 ranking across its entire 383-URL domain.",
+        byDesc(d=>d.p13), v=>nf(v)) +
+  chart("Monthly organic traffic value (USD)",
+        "What the organic footprint would cost to buy through paid search.",
+        byDesc(d=>d.val), v=>"$"+nf(v));
+
+/* ---------- BASELINE TABLE ---------- */
+buildTable("#tbl-baseline",[
+  {h:"Domain",get:r=>r.n,cell:r=>`<strong>${esc(r.n)}</strong><br><span style="color:var(--tx3);font-size:11.5px" class="mono">${esc(r.d)}</span>`},
+  {h:"Keywords",num:1,get:r=>r.kw,cell:r=>nf(r.kw)},
+  {h:"Traffic",num:1,get:r=>r.tr,cell:r=>nf(r.tr)},
+  {h:"Value",num:1,get:r=>r.val,cell:r=>"$"+nf(r.val)},
+  {h:"Pos 1–3",num:1,get:r=>r.p13,cell:r=>nf(r.p13)},
+  {h:"Comm. traffic",num:1,get:r=>r.ct,cell:r=>`<strong>${nf(r.ct)}</strong>`},
+  {h:"Info traffic",num:1,get:r=>r.it,cell:r=>nf(r.it)},
+  {h:"Comm. share",num:1,get:r=>r.ct/(r.ct+r.it),cell:r=>Math.round(r.ct/(r.ct+r.it)*100)+"%"},
+  {h:"Comm./1k KW",num:1,get:r=>Math.round(r.ct/r.kw*1000),cell:r=>`<strong>${nf(Math.round(r.ct/r.kw*1000))}</strong>`},
+  {h:"Traffic/KW",num:1,get:r=>r.tr/r.kw,cell:r=>(r.tr/r.kw).toFixed(2)},
+  {h:"Pages",num:1,get:r=>r.pages,cell:r=>nf(r.pages)},
+  {h:"Snippets",num:1,get:r=>r.fs,cell:r=>nf(r.fs)},
+  {h:"AI Overview",num:1,get:r=>r.aio,cell:r=>nf(r.aio)},
+  {h:"Local pack",num:1,get:r=>r.lp,cell:r=>nf(r.lp)}
+], BASELINE.slice().sort((a,b)=>b.ct-a.ct), {rowClass:r=>r.tier==="groto"?"groto-row":""});
+
+/* ---------- ARCHITECTURE ---------- */
+const icpBadge = v => {
+  if(v==="BROKEN") return `<span class="b crit">Broken</span>`;
+  if(v.startsWith("Direct")) return `<span class="b ok">${esc(v)}</span>`;
+  if(v==="Adjacent") return `<span class="b warn">Adjacent</span>`;
+  return `<span class="b neu">${esc(v)}</span>`;
+};
+buildTable("#tbl-arch",[
+  {h:"Section",get:r=>r.t,cell:r=>`<strong>${esc(r.t)}</strong>`,w:"170px"},
+  {h:"Path",get:r=>r.path,cell:r=>`<code>${esc(r.path)}</code>`,w:"180px"},
+  {h:"Pages",num:1,get:r=>r.n,cell:r=>`<strong>${r.n}</strong>`},
+  {h:"ICP relevance",get:r=>r.icp,cell:r=>icpBadge(r.icp),w:"140px"},
+  {h:"Finding",get:r=>r.note,w:"460px"}
+], GROTO_ARCH.slice().sort((a,b)=>b.n-a.n));
+
+buildTable("#tbl-gap",[
+  {h:"Page type",get:r=>r.t,cell:r=>`<strong>${esc(r.t)}</strong>`,w:"210px"},
+  {h:"Status",get:r=>r.s,cell:r=>{
+    const c = r.s==="Missing"?"crit":r.s==="Partial"?"warn":r.s.startsWith("Present")?"warn":"ok";
+    return `<span class="b ${c}">${esc(r.s)}</span>`;},w:"170px"},
+  {h:"What specifically is missing",get:r=>r.d}
+], PAGETYPE_GAP);
+
+/* ---------- COMPARISON ---------- */
+buildTable("#tbl-compare",[
+  {h:"Attribute",get:r=>r.a,cell:r=>`<strong>${esc(r.a)}</strong>`,w:"200px"},
+  {h:"Thomas Digital",get:r=>r.td},{h:"NeuronUX",get:r=>r.nx},{h:"Clay",get:r=>r.cl},
+  {h:"Eleken",get:r=>r.el},{h:"Superside",get:r=>r.ss},{h:"Ramotion",get:r=>r.rm},{h:"Parallel HQ",get:r=>r.ph},
+  {h:"GROTO",get:r=>r.gr,cell:r=>{
+    const c = r.gap==="crit"?"crit":r.gap==="warn"?"warn":"ok";
+    return `<span class="b ${c}">${esc(r.gr)}</span>`;},w:"130px"},
+  {h:"Verdict",get:r=>r.gap,cell:r=>{
+    const m={crit:["crit","Critical gap"],warn:["warn","Behind"],ok:["ok","Parity / ahead"]}[r.gap];
+    return `<span class="b ${m[0]}">${m[1]}</span>`;},w:"120px"},
+  {h:"Why it matters",get:r=>r.why,w:"420px"}
+], COMPARISON);
+
+/* ---------- ROOT CAUSE ---------- */
+$("#rootcause").innerHTML = ROOTCAUSE.map(r=>{
+  const cls = r.sev==="CRITICAL"?"":r.sev==="HIGH"?"high":"med";
+  const bc  = r.sev==="CRITICAL"?"crit":r.sev==="HIGH"?"warn":"neu";
+  return `<div class="rc ${cls}">
+    <div class="hd"><div class="rank">${String(r.r).padStart(2,"0")}</div>
+      <div class="ttl">${rich(r.t)}</div>
+      <span class="b ${bc}">${r.sev}</span></div>
+    <div class="sec"><span class="lbl">Evidence</span><p>${rich(r.ev)}</p></div>
+    <div class="sec"><span class="lbl">What competitors do instead</span><p>${rich(r.cf)}</p></div>
+    <div class="sec fix"><span class="lbl">The fix</span><p>${rich(r.fix)}</p></div>
+  </div>`;
+}).join("");
+
+/* ---------- BRIDGE ---------- */
+buildTable("#tbl-bridge",[
+  {h:"Content cluster",get:r=>r.cl,cell:r=>`<strong>${esc(r.cl)}</strong>`,w:"170px"},
+  {h:"Posts",get:r=>r.posts,cell:r=>esc(r.posts).split(" · ").map(p=>`<code>${p}</code>`).join(" "),w:"280px"},
+  {h:"Links to",get:r=>r.tgt,cell:r=>esc(r.tgt).split(" and ").map(p=>`<code>${p}</code>`).join(" and "),w:"220px"},
+  {h:"Anchor text",get:r=>r.anchor,cell:r=>`<em style="color:var(--ac2)">${esc(r.anchor)}</em>`,w:"250px"},
+  {h:"Placement",get:r=>r.place,w:"260px"},
+  {h:"Expected impact",get:r=>r.impact,w:"240px"}
+], BRIDGE);
+
+/* ---------- BUILD PLAN ---------- */
+const buildCols = [
+  {h:"Page",get:r=>r.t,cell:r=>`<strong>${esc(r.t)}</strong>`,w:"230px"},
+  {h:"Target URL",get:r=>r.u,cell:r=>`<code>${esc(r.u)}</code>`,w:"200px"},
+  {h:"Primary keyword",get:r=>r.kw,cell:r=>`<span class="mono" style="font-size:12px;color:var(--ac2)">${esc(r.kw)}</span>`,w:"190px"},
+  {h:"Target ICP",get:r=>r.icp,w:"180px"},
+  {h:"Intent",get:r=>r.si,cell:r=>`<span class="b ac">${esc(r.si)}</span>`},
+  {h:"Competitor reference",get:r=>r.ref,cell:r=>`<code>${esc(r.ref)}</code>`,w:"210px"},
+  {h:"Priority reason",get:r=>r.why,w:"400px"}
+];
+buildTable("#tbl-p1",buildCols,BUILD_P1);
+buildTable("#tbl-p2",buildCols,BUILD_P2);
+buildTable("#tbl-p3",buildCols,BUILD_P3);
+
+buildTable("#tbl-kw",[
+  {h:"Page",get:r=>r.p,cell:r=>`<code>${esc(r.p)}</code>`,w:"210px"},
+  {h:"Primary keyword",get:r=>r.pk,cell:r=>`<strong style="color:var(--ac2)">${esc(r.pk)}</strong>`,w:"170px"},
+  {h:"Secondary keywords",get:r=>r.sk,w:"250px"},
+  {h:"Long-tail variants",get:r=>r.lt,w:"250px"},
+  {h:"PAA to target (observed live)",get:r=>r.paa,w:"310px"},
+  {h:"Featured snippet",get:r=>r.fs,cell:r=>{
+    const yes = r.fs.startsWith("Yes");
+    return `<span class="b ${yes?"ok":"neu"}">${esc(r.fs)}</span>`;},w:"180px"}
+], KW_STRATEGY);
+
+/* ---------- CASE STUDIES ---------- */
+buildTable("#tbl-cases",[
+  {h:"Current URL",get:r=>r.u,cell:r=>{
+    const missing = r.u.indexOf("DOES NOT EXIST")>-1;
+    return `<code style="${missing?"color:var(--crit)":""}">${esc(r.u)}</code>`;},w:"250px"},
+  {h:"Client",get:r=>r.c,cell:r=>`<strong>${esc(r.c)}</strong>`},
+  {h:"Industry",get:r=>r.i},
+  {h:"Outcome metric today",get:r=>r.m,cell:r=>{
+    if(r.m==="NONE") return `<span class="b crit">NONE</span>`;
+    if(r.m.startsWith("Problem")) return `<span class="b warn">${esc(r.m)}</span>`;
+    return `<span class="b ok">${esc(r.m)}</span>`;},w:"200px"},
+  {h:"Keyword to target",get:r=>r.kw,cell:r=>`<span class="mono" style="font-size:12px;color:var(--ac2)">${esc(r.kw)}</span>`,w:"200px"},
+  {h:"Recommended title tag",get:r=>r.tt,w:"290px"},
+  {h:"Missing elements to add",get:r=>r.add,w:"300px"},
+  {h:"Should be linked from",get:r=>r.link,w:"190px"}
+], CASESTUDIES, {rowClass:r=>r.u.indexOf("DOES NOT EXIST")>-1?"groto-row":""});
+
+/* ---------- SERP ---------- */
+buildTable("#tbl-serp",[
+  {h:"Buyer query",get:r=>r.q,cell:r=>`<strong>${esc(r.q)}</strong>`,w:"240px"},
+  {h:"Groto position",get:r=>r.g,cell:r=>{
+    const win = r.g.startsWith("RANKS");
+    return `<span class="b ${win?"warn":"crit"}">${esc(r.g)}</span>`;},w:"200px"},
+  {h:"Who ranks instead",get:r=>r.who,cell:r=>esc(r.who).split(" · ").map(d=>`<code>${d}</code>`).join(" ")}
+], SERP);
+
+buildTable("#tbl-lanes",[
+  {h:"Query",get:r=>r.q,cell:r=>`<strong>${esc(r.q)}</strong>`,w:"250px"},
+  {h:"Verdict",get:r=>r.v,cell:r=>{
+    const hot = r.v.indexOf("HIGHEST")>-1 || r.v.indexOf("First-mover")>-1;
+    return `<span class="b ${hot?"ok":"ac"}">${esc(r.v)}</span>`;},w:"190px"},
+  {h:"SERP evidence",get:r=>r.ev}
+], OPEN_LANES);
+
+/* ---------- PROFILES ---------- */
+function renderProfiles(filter){
+  const data = filter==="all" ? PROFILES : PROFILES.filter(p=>p.tier===filter);
+  $("#profiles").innerHTML = data.map(p=>`
+    <details>
+      <summary>
+        <strong>${esc(p.n)}</strong>
+        <code style="font-size:11.5px">${esc(p.d)}</code>
+        <span class="b ${p.tier==="deep"?"ac":"neu"}">${p.tier==="deep"?"Deep analysis":"Benchmarked"}</span>
+        <span style="color:var(--tx3);font-size:12.5px;margin-left:auto;font-weight:400" class="hide-sm">${esc(p.role.split("—")[0].trim())}</span>
+      </summary>
+      <div class="body">
+        <div class="kv">
+          <div class="k">Role in the set</div><div class="v">${rich(p.role)}</div>
+          <div class="k">The distinctive play</div><div class="v">${rich(p.play)}</div>
+          <div class="k">Proof they show</div><div class="v">${rich(p.metric)}</div>
+        </div>
+        <div class="grid g2" style="margin-top:16px">
+          <div class="card" style="border-color:rgba(63,185,132,.25)">
+            <h4 style="color:var(--ok)">Steal this</h4>
+            <ul>${p.steal.map(s=>`<li>${rich(s)}</li>`).join("")}</ul>
+          </div>
+          <div class="card" style="border-color:rgba(244,100,95,.25)">
+            <h4 style="color:var(--crit)">Don't inherit this</h4>
+            <ul>${p.avoid.map(s=>`<li>${rich(s)}</li>`).join("")}</ul>
+          </div>
+        </div>
+      </div>
+    </details>`).join("");
+}
+renderProfiles("all");
+document.querySelectorAll("[data-pf]").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll("[data-pf]").forEach(x=>x.classList.remove("on"));
+  b.classList.add("on"); renderProfiles(b.dataset.pf);
+});
+
+/* ---------- ROADMAP ---------- */
+const months = [...new Set(ROADMAP.map(r=>r.m))];
+$("#roadmap").innerHTML = months.map(m=>`
+  <div class="month">
+    <div class="mh">${esc(m)}</div>
+    ${ROADMAP.filter(r=>r.m===m).map(w=>`
+      <div class="wk">
+        <div class="wh">
+          <span class="wn">${esc(w.w)}</span>
+          <span class="wt">${esc(w.theme)}</span>
+          <span class="wo">Owner: ${esc(w.owner)}</span>
+        </div>
+        <ol>${w.tasks.map(t=>`<li>${rich(t)}</li>`).join("")}</ol>
+      </div>`).join("")}
+  </div>`).join("");
+
+/* ---------- CHECKLIST ---------- */
+buildTable("#tbl-check",[
+  {h:"",get:()=>"",cell:()=>`<span style="color:var(--tx3);font-family:var(--mono)">☐</span>`,w:"36px"},
+  {h:"Check",get:r=>r.c,cell:r=>`<strong>${esc(r.c)}</strong>`,w:"400px"},
+  {h:"Why — the defect this prevents",get:r=>r.src}
+], CHECKLIST);
+</script>
+</body></html>
